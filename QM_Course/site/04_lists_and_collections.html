@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lists and collections</title><style>
+:root{
+  --bg:#0d1117; --panel:#161b22; --border:#30363d; --fg:#e6edf3;
+  --muted:#8b949e; --accent:#58a6ff; --code:#1f2630; --green:#3fb950;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+#layout{display:flex;min-height:100vh}
+#sidebar{width:310px;flex:0 0 310px;background:var(--panel);
+  border-right:1px solid var(--border);padding:22px 18px;overflow-y:auto;
+  height:100vh;position:sticky;top:0}
+#sidebar h1{font-size:17px;margin:0 0 4px;color:var(--accent)}
+#sidebar .sub{font-size:12px;color:var(--muted);margin-bottom:18px}
+#sidebar .part{font-size:11px;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--muted);margin:18px 0 7px}
+#sidebar a{display:block;color:var(--fg);text-decoration:none;padding:5px 9px;
+  border-radius:6px;font-size:13.5px;margin-bottom:1px}
+#sidebar a:hover{background:var(--code)}
+#sidebar a.active{background:var(--accent);color:#0d1117;font-weight:600}
+main{flex:1;padding:44px 56px;max-width:900px}
+h1{font-size:31px;margin:0 0 22px;line-height:1.25}
+h2{font-size:22px;margin:36px 0 12px;padding-bottom:7px;
+  border-bottom:1px solid var(--border)}
+h3{font-size:17px;margin:26px 0 9px;color:var(--accent)}
+p{margin:12px 0}
+a{color:var(--accent)}
+code{background:var(--code);padding:2px 6px;border-radius:4px;
+  font:14px/1.5 "Cascadia Code",Consolas,monospace;color:#ffa657}
+pre{background:var(--code);border:1px solid var(--border);border-radius:9px;
+  padding:15px 17px;overflow-x:auto;margin:16px 0}
+pre code{background:none;padding:0;color:#e6edf3;font-size:13.5px}
+table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px}
+th,td{border:1px solid var(--border);padding:8px 11px;text-align:left}
+th{background:var(--panel);color:var(--accent)}
+tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+blockquote{border-left:3px solid var(--accent);margin:16px 0;padding:2px 18px;
+  color:var(--muted)}
+hr{border:none;border-top:1px solid var(--border);margin:30px 0}
+ul,ol{padding-left:26px}
+li{margin:5px 0}
+strong{color:#fff}
+.nav{display:flex;justify-content:space-between;margin-top:52px;
+  padding-top:22px;border-top:1px solid var(--border);gap:14px}
+.nav a{padding:9px 15px;background:var(--panel);border:1px solid var(--border);
+  border-radius:8px;text-decoration:none;font-size:14px}
+.nav a:hover{border-color:var(--accent)}
+.hero{background:linear-gradient(135deg,#161b22,#1f2937);
+  border:1px solid var(--border);border-radius:13px;padding:30px;margin:22px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:13px;margin:20px 0}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;
+  padding:15px 17px;text-decoration:none;color:var(--fg);display:block}
+.card:hover{border-color:var(--accent)}
+.card b{display:block;margin-bottom:4px}
+.card span{font-size:12.5px;color:var(--muted)}
+@media(max-width:900px){#layout{flex-direction:column}
+  #sidebar{width:100%;height:auto;position:static}main{padding:26px 20px}}
+</style></head>
+<body><div id="layout">
+<nav id="sidebar"><h1>Computational Quantum Physics</h1><div class="sub">a course built from your own project</div>
+<a href="index.html" class="">&#8962; Home</a>
+<div class="part">Part 1 — Python from zero</div>
+<a href="01_setup_first_program.html" class="">01. Setup and your first program</a>
+<a href="02_variables_and_types.html" class="">02. Variables, numbers and types</a>
+<a href="03_decisions_and_loops.html" class="">03. Decisions and loops</a>
+<a href="04_lists_and_collections.html" class="active">04. Lists and collections</a>
+<a href="05_functions.html" class="">05. Functions</a>
+<div class="part">Part 2 — Scientific Python</div>
+<a href="06_numpy.html" class="">06. numpy: arrays and vectorised thinking</a>
+<a href="07_matplotlib.html" class="">07. matplotlib: drawing graphs properly</a>
+<a href="08_randomness.html" class="">08. Randomness, simulation and statistics</a>
+<div class="part">Part 3 — The ten tasks</div>
+<a href="09_task1_random_walk.html" class="">09. Task 1 — Random walks</a>
+<a href="10_task2_brownian.html" class="">10. Task 2 — Brownian motion</a>
+<a href="11_task3_blackbody.html" class="">11. Task 3 — Planck and Einstein</a>
+<a href="12_task4_photoelectric.html" class="">12. Task 4 — Photoelectric effect</a>
+<a href="13_task5_hydrogen.html" class="">13. Task 5 — Hydrogen spectrum</a>
+<a href="14_task6_diffraction.html" class="">14. Task 6 — Electron diffraction</a>
+<a href="15_task7_particle_in_box.html" class="">15. Task 7 — Particle in a box</a>
+<a href="16_task8_cryptography.html" class="">16. Task 8 — Quantum cryptography</a>
+<a href="17_task9_compton.html" class="">17. Task 9 — Compton scattering</a>
+<a href="18_task10_orbitals.html" class="">18. Task 10 — Hydrogenic orbitals</a>
+<div class="part">Part 4 — Making it interactive</div>
+<a href="19_widgets.html" class="">19. Widgets and interactivity</a>
+<a href="20_tkinter_launcher.html" class="">20. The tkinter launcher</a>
+<a href="21_colour_science.html" class="">21. Colour science: CIE 1931</a>
+<div class="part">Part 5 — Capstone</div>
+<a href="22_capstone.html" class="">22. Capstone: rebuild everything</a>
+<div class="part">Reference</div>
+<a href="python_cheatsheet.html" class="">Python cheat sheet</a>
+<a href="numpy_cheatsheet.html" class="">numpy cheat sheet</a>
+<a href="matplotlib_cheatsheet.html" class="">matplotlib cheat sheet</a>
+<a href="physics_formulas.html" class="">Physics formula sheet</a>
+<a href="errors_decoded.html" class="">Error messages decoded</a>
+<a href="glossary.html" class="">Glossary</a></nav>
+<main><h1>Chapter 4 — Lists and collections</h1>
+
+<p><strong>Goal:</strong> store many values at once, index them, and know when to reach for a</p>
+<p>list, a dictionary or a tuple.</p>
+
+<hr>
+
+<h2>4.1 Lists</h2>
+
+<p>A list holds items in order, in square brackets:</p>
+
+<pre><code>
+temperatures = [3000, 4000, 5000, 5778, 6000]
+metals = [&quot;caesium&quot;, &quot;sodium&quot;, &quot;zinc&quot;]
+mixed = [1, &quot;two&quot;, 3.0, True]        # legal, but rarely a good idea
+empty = []                           # start empty and fill later
+</code></pre>
+
+<h3>Indexing — counting from zero</h3>
+
+<pre><code>
+temperatures[0]     # 3000   FIRST item
+temperatures[1]     # 4000
+temperatures[-1]    # 6000   LAST item
+temperatures[-2]    # 5778   second from the end
+</code></pre>
+
+<p>Two things to burn in:</p>
+
+<ol>
+<li><strong>Indexing starts at 0.</strong> The first item is item zero. This is universal in</li>
+<p>   programming and it exists because an index is really &quot;how far from the start&quot;.</p>
+<li><strong><code>[-1]</code> is the last item.</strong> You used this constantly:</li>
+<p>   <code>x[-1], y[-1]</code> was the walker&#x27;s final position.</p>
+</ul>
+
+<h3>Slicing — taking a section</h3>
+
+<pre><code>
+temperatures[1:4]    # [4000, 5000, 5778]   from 1 up to (not including) 4
+temperatures[:3]     # [3000, 4000, 5000]   from the start
+temperatures[2:]     # [5000, 5778, 6000]   to the end
+temperatures[::2]    # [3000, 5000, 6000]   every second one
+</code></pre>
+
+<p>The &quot;up to but not including&quot; rule is consistent with <code>range()</code> — the stop value</p>
+<p>is always excluded. Annoying for a week, then invisible forever.</p>
+
+<h3>Growing a list</h3>
+
+<pre><code>
+trail_x = []
+trail_x.append(3.7)       # add one item to the end
+trail_x.append(4.1)
+print(len(trail_x))       # 2      len() gives the number of items
+</code></pre>
+
+<p><code>.append()</code> is how the Brownian particle&#x27;s trail was recorded — one position per</p>
+<p>frame, growing forever:</p>
+
+<pre><code>
+trail_x.append(bx)
+trail_y.append(by)
+</code></pre>
+
+<p>Other useful operations:</p>
+
+<pre><code>
+values = [5, 3, 9, 1]
+values.sort()             # [1, 3, 5, 9]   sorts in place
+len(values)               # 4
+sum(values)               # 18
+max(values), min(values)  # 9, 1
+9 in values               # True    membership test
+</code></pre>
+
+<hr>
+
+<h2>4.2 Lists are mutable — and shared</h2>
+
+<p>This surprises everyone once:</p>
+
+<pre><code>
+a = [1, 2, 3]
+b = a
+b.append(4)
+print(a)        # [1, 2, 3, 4]   -- a changed too!
+</code></pre>
+
+<p>Because <code>b = a</code> doesn&#x27;t copy the list; it sticks a <em>second label</em> on the <em>same</em></p>
+<p>list (remember Chapter 2: names are labels). To genuinely copy:</p>
+
+<pre><code>
+b = a.copy()       # or  b = a[:]
+</code></pre>
+
+<p>This bites in simulations when you think you saved a snapshot but actually saved</p>
+<p>a live reference to something that keeps changing.</p>
+
+<hr>
+
+<h2>4.3 Tuples — lists that can&#x27;t change</h2>
+
+<p>Round brackets instead of square:</p>
+
+<pre><code>
+point = (3.0, 4.5)
+n, l, m = (3, 2, 1)        # &quot;unpacking&quot; - three names at once
+</code></pre>
+
+<p>You cannot append to or modify a tuple. That&#x27;s the point: they&#x27;re for fixed</p>
+<p>groupings, like coordinates or quantum-number triples. In the project:</p>
+
+<pre><code>
+orbitals = [(1, 0, 0), (2, 0, 0), (2, 1, 0), ...]   # list of tuples
+for n, l, m in orbitals:                            # unpacked in the loop
+</code></pre>
+
+<p>That&#x27;s a list of quantum-number triples, unpacked into three variables each</p>
+<p>time round. Clean and readable.</p>
+
+<p><strong>Unpacking works generally</strong>, which explains a line that once confused you:</p>
+
+<pre><code>
+bx, by = 0.0, 0.0            # two assignments at once
+Lm1, L0 = L0, new_value      # swap/rotate values simultaneously
+</code></pre>
+
+<p>The second form is used in the Laguerre polynomial recurrence — it updates two</p>
+<p>variables <em>at the same time</em>, so the old value of <code>L0</code> is still available on the</p>
+<p>right-hand side. Writing it as two separate lines would break the maths.</p>
+
+<h3>The lonely comma</h3>
+
+<pre><code>
+dots, = ax.plot(x, y, &#x27;b.&#x27;)
+</code></pre>
+
+<p><code>ax.plot</code> returns a <em>list</em> of drawn lines (usually with one item). The trailing</p>
+<p>comma unpacks that single item out of the list. Without it, <code>dots</code> would be a</p>
+<p>list, not a line, and <code>dots.set_data(...)</code> would fail. Now you know.</p>
+
+<hr>
+
+<h2>4.4 Dictionaries — lookup by name</h2>
+
+<p>A dictionary stores <strong>key → value</strong> pairs in curly brackets:</p>
+
+<pre><code>
+metals = {&#x27;caesium&#x27;: 2.10, &#x27;sodium&#x27;: 2.28, &#x27;zinc&#x27;: 4.31, &#x27;copper&#x27;: 4.70}
+
+print(metals[&#x27;sodium&#x27;])          # 2.28
+metals[&#x27;platinum&#x27;] = 5.65        # add a new entry
+print(len(metals))               # 5
+</code></pre>
+
+<p>Looping over one:</p>
+
+<pre><code>
+for name, W in metals.items():       # both key and value
+    print(name, W)
+
+for name in metals:                  # keys only
+    print(name)
+</code></pre>
+
+<p>Dictionaries are the right tool when data has <em>names</em> rather than positions.</p>
+<p>Compare the two ways of storing the same physics:</p>
+
+<pre><code>
+# with two lists - fragile, easy to misalign
+names = [&#x27;caesium&#x27;, &#x27;sodium&#x27;]
+works = [2.10, 2.28]
+
+# with a dictionary - impossible to misalign
+metals = {&#x27;caesium&#x27;: 2.10, &#x27;sodium&#x27;: 2.28}
+</code></pre>
+
+<p>Every metal, series and beam in your project is stored as a dictionary for</p>
+<p>exactly this reason.</p>
+
+<hr>
+
+<h2>4.5 Choosing the right container</h2>
+
+<table>
+<tr><th>Need</th><th>Use</th><th>Why</th></tr>
+<tr><td>Ordered values, will grow</td><td><strong>list</strong></td><td><code>.append()</code> works</td></tr>
+<tr><td>Fixed group (x,y) or (n,l,m)</td><td><strong>tuple</strong></td><td>can&#x27;t be corrupted</td></tr>
+<tr><td>Values with names</td><td><strong>dict</strong></td><td>lookup by meaning</td></tr>
+<tr><td>Thousands of numbers for maths</td><td><strong>numpy array</strong> (Ch 6)</td><td>fast, vectorised</td></tr>
+</table>
+
+<p>That last row matters: a Python list of 200 particle positions is the <em>wrong</em></p>
+<p>tool. It cannot do maths on all items at once and it&#x27;s slow. Chapter 6 is where</p>
+<p>you meet the right one.</p>
+
+<p>Notice the project mixes both deliberately:</p>
+
+<pre><code>
+trail_x, trail_y = [], []       # lists - they GROW each frame
+x = np.random.uniform(...)      # array - fixed size, needs fast maths
+</code></pre>
+
+<p>Growing needs a list; maths needs an array. That&#x27;s a real engineering decision,</p>
+<p>and you can now explain it.</p>
+
+<hr>
+
+<h2>Exercises</h2>
+
+<p>Create <code>ch04_exercises.py</code>.</p>
+
+<ol>
+<li>Make a list of the first six Balmer wavelengths (656.3, 486.1, 434.0, 410.2,</li>
+<p>   397.0, 388.9). Print the first, the last, and the middle two using slicing.</p>
+<li>Build the list <code>[1, 4, 9, 16, 25]</code> using an empty list and <code>.append()</code> in a</li>
+<p>   loop.</p>
+<li>Make a dictionary of four metals and their work functions. Loop over it and</li>
+<p>   print, for each, the cutoff wavelength in nm using <code>1240 / W_eV</code>.</p>
+<li>Given <code>data = [3, 8, 2, 9, 4]</code>, print its length, sum, mean (sum/len), max</li>
+<p>   and min — without numpy.</p>
+<li>Predict, then test: what does this print?</li>
+<p>   ```python</p>
+<p>   a = [1, 2, 3]</p>
+<p>   b = a</p>
+<p>   b[0] = 99</p>
+<p>   print(a[0])</p>
+<p>   ```</p>
+<p>   Then fix it so <code>a</code> is unaffected.</p>
+<li>Store three orbitals as tuples in a list, loop over them unpacking into</li>
+<p>   <code>n, l, m</code>, and print <code>n + l + m</code> for each.</p>
+</ul>
+
+<hr>
+
+<h2>What you now know</h2>
+
+<ul>
+<li>Lists: ordered, indexed from 0, <code>[-1]</code> is last, slicing excludes the stop.</li>
+<li><code>.append()</code> grows a list; <code>len()</code>, <code>sum()</code>, <code>max()</code>, <code>in</code> inspect it.</li>
+<li>Assignment shares rather than copies; use <code>.copy()</code> when you mean copy.</li>
+<li>Tuples are fixed groupings; unpacking assigns several names at once, and the</li>
+<p>  simultaneous form powers the polynomial recurrences.</p>
+<li>Dictionaries map names to values and prevent misaligned data.</li>
+<li>Lists grow; numpy arrays compute. Use each for its job.</li>
+</ul>
+
+<p>Next: <a href="05_functions.md">Chapter 5 — Functions</a></p>
+<div class="nav"><a href="03_decisions_and_loops.html">&larr; Decisions and loops</a><a href="05_functions.html">Functions &rarr;</a></div></main>
+</div></body></html>

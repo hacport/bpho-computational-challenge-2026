@@ -1,0 +1,25 @@
+# --- Third-party material: NOT mine to republish ---
+# The BPhO challenge pack and problem sheets are copyright British Physics
+# Olympiad / Dr A. French. They are freely available from bpho.org.uk and
+# eclecticon.info, so this repo links to them rather than redistributing them.
+BPhO ComPhys Challenge 2026.pdf
+BPhO CompPhys2026 Quantum.pdf
+QM problem sheets/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# --- OS / editor ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# --- Generated output ---
+# Uncomment if you prefer not to version the rendered site
+# QM_Course/site/

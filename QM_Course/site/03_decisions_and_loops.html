@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Decisions and loops</title><style>
+:root{
+  --bg:#0d1117; --panel:#161b22; --border:#30363d; --fg:#e6edf3;
+  --muted:#8b949e; --accent:#58a6ff; --code:#1f2630; --green:#3fb950;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+#layout{display:flex;min-height:100vh}
+#sidebar{width:310px;flex:0 0 310px;background:var(--panel);
+  border-right:1px solid var(--border);padding:22px 18px;overflow-y:auto;
+  height:100vh;position:sticky;top:0}
+#sidebar h1{font-size:17px;margin:0 0 4px;color:var(--accent)}
+#sidebar .sub{font-size:12px;color:var(--muted);margin-bottom:18px}
+#sidebar .part{font-size:11px;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--muted);margin:18px 0 7px}
+#sidebar a{display:block;color:var(--fg);text-decoration:none;padding:5px 9px;
+  border-radius:6px;font-size:13.5px;margin-bottom:1px}
+#sidebar a:hover{background:var(--code)}
+#sidebar a.active{background:var(--accent);color:#0d1117;font-weight:600}
+main{flex:1;padding:44px 56px;max-width:900px}
+h1{font-size:31px;margin:0 0 22px;line-height:1.25}
+h2{font-size:22px;margin:36px 0 12px;padding-bottom:7px;
+  border-bottom:1px solid var(--border)}
+h3{font-size:17px;margin:26px 0 9px;color:var(--accent)}
+p{margin:12px 0}
+a{color:var(--accent)}
+code{background:var(--code);padding:2px 6px;border-radius:4px;
+  font:14px/1.5 "Cascadia Code",Consolas,monospace;color:#ffa657}
+pre{background:var(--code);border:1px solid var(--border);border-radius:9px;
+  padding:15px 17px;overflow-x:auto;margin:16px 0}
+pre code{background:none;padding:0;color:#e6edf3;font-size:13.5px}
+table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px}
+th,td{border:1px solid var(--border);padding:8px 11px;text-align:left}
+th{background:var(--panel);color:var(--accent)}
+tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+blockquote{border-left:3px solid var(--accent);margin:16px 0;padding:2px 18px;
+  color:var(--muted)}
+hr{border:none;border-top:1px solid var(--border);margin:30px 0}
+ul,ol{padding-left:26px}
+li{margin:5px 0}
+strong{color:#fff}
+.nav{display:flex;justify-content:space-between;margin-top:52px;
+  padding-top:22px;border-top:1px solid var(--border);gap:14px}
+.nav a{padding:9px 15px;background:var(--panel);border:1px solid var(--border);
+  border-radius:8px;text-decoration:none;font-size:14px}
+.nav a:hover{border-color:var(--accent)}
+.hero{background:linear-gradient(135deg,#161b22,#1f2937);
+  border:1px solid var(--border);border-radius:13px;padding:30px;margin:22px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:13px;margin:20px 0}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;
+  padding:15px 17px;text-decoration:none;color:var(--fg);display:block}
+.card:hover{border-color:var(--accent)}
+.card b{display:block;margin-bottom:4px}
+.card span{font-size:12.5px;color:var(--muted)}
+@media(max-width:900px){#layout{flex-direction:column}
+  #sidebar{width:100%;height:auto;position:static}main{padding:26px 20px}}
+</style></head>
+<body><div id="layout">
+<nav id="sidebar"><h1>Computational Quantum Physics</h1><div class="sub">a course built from your own project</div>
+<a href="index.html" class="">&#8962; Home</a>
+<div class="part">Part 1 — Python from zero</div>
+<a href="01_setup_first_program.html" class="">01. Setup and your first program</a>
+<a href="02_variables_and_types.html" class="">02. Variables, numbers and types</a>
+<a href="03_decisions_and_loops.html" class="active">03. Decisions and loops</a>
+<a href="04_lists_and_collections.html" class="">04. Lists and collections</a>
+<a href="05_functions.html" class="">05. Functions</a>
+<div class="part">Part 2 — Scientific Python</div>
+<a href="06_numpy.html" class="">06. numpy: arrays and vectorised thinking</a>
+<a href="07_matplotlib.html" class="">07. matplotlib: drawing graphs properly</a>
+<a href="08_randomness.html" class="">08. Randomness, simulation and statistics</a>
+<div class="part">Part 3 — The ten tasks</div>
+<a href="09_task1_random_walk.html" class="">09. Task 1 — Random walks</a>
+<a href="10_task2_brownian.html" class="">10. Task 2 — Brownian motion</a>
+<a href="11_task3_blackbody.html" class="">11. Task 3 — Planck and Einstein</a>
+<a href="12_task4_photoelectric.html" class="">12. Task 4 — Photoelectric effect</a>
+<a href="13_task5_hydrogen.html" class="">13. Task 5 — Hydrogen spectrum</a>
+<a href="14_task6_diffraction.html" class="">14. Task 6 — Electron diffraction</a>
+<a href="15_task7_particle_in_box.html" class="">15. Task 7 — Particle in a box</a>
+<a href="16_task8_cryptography.html" class="">16. Task 8 — Quantum cryptography</a>
+<a href="17_task9_compton.html" class="">17. Task 9 — Compton scattering</a>
+<a href="18_task10_orbitals.html" class="">18. Task 10 — Hydrogenic orbitals</a>
+<div class="part">Part 4 — Making it interactive</div>
+<a href="19_widgets.html" class="">19. Widgets and interactivity</a>
+<a href="20_tkinter_launcher.html" class="">20. The tkinter launcher</a>
+<a href="21_colour_science.html" class="">21. Colour science: CIE 1931</a>
+<div class="part">Part 5 — Capstone</div>
+<a href="22_capstone.html" class="">22. Capstone: rebuild everything</a>
+<div class="part">Reference</div>
+<a href="python_cheatsheet.html" class="">Python cheat sheet</a>
+<a href="numpy_cheatsheet.html" class="">numpy cheat sheet</a>
+<a href="matplotlib_cheatsheet.html" class="">matplotlib cheat sheet</a>
+<a href="physics_formulas.html" class="">Physics formula sheet</a>
+<a href="errors_decoded.html" class="">Error messages decoded</a>
+<a href="glossary.html" class="">Glossary</a></nav>
+<main><h1>Chapter 3 — Decisions and loops</h1>
+
+<p><strong>Goal:</strong> make code choose and repeat. By the end you can write the nested loop</p>
+<p>structure that powers the Einstein diffusion experiment.</p>
+
+<hr>
+
+<h2>3.1 Indentation is the grammar</h2>
+
+<p>Most languages use <code>{ }</code> to group lines. Python uses <strong>indentation</strong> — spaces at</p>
+<p>the start of the line. This is not decoration; it is the syntax.</p>
+
+<pre><code>
+if temperature &gt; 5000:
+    print(&quot;hot star&quot;)          # inside the if  (4 spaces)
+    print(&quot;probably white&quot;)    # also inside
+print(&quot;done&quot;)                  # outside - always runs
+</code></pre>
+
+<p>Rules:</p>
+
+<ul>
+<li>The line introducing a block ends with a colon <code>:</code>.</li>
+<li>Everything indented under it belongs to that block.</li>
+<li>Use <strong>4 spaces</strong> per level. VS Code does it when you press Tab.</li>
+<li>Be consistent — mixing tabs and spaces gives <code>IndentationError</code>.</li>
+</ul>
+
+<p>You met this the hard way: in the Einstein diffusion file, one line had 9 spaces</p>
+<p>instead of 8 and Python refused to run. Indentation <em>is</em> meaning.</p>
+
+<hr>
+
+<h2>3.2 if / elif / else</h2>
+
+<pre><code>
+KE = photon_energy - work_function
+
+if KE &gt; 0:
+    print(&quot;electron emitted&quot;)
+elif KE == 0:
+    print(&quot;exactly at threshold&quot;)
+else:
+    print(&quot;no emission&quot;)
+</code></pre>
+
+<ul>
+<li><code>if</code> — test first condition</li>
+<li><code>elif</code> — &quot;else if&quot;, test another (as many as you like)</li>
+<li><code>else</code> — everything not caught above (optional)</li>
+</ul>
+
+<p>Only <strong>one</strong> branch ever runs.</p>
+
+<h3>Comparison operators</h3>
+
+<table>
+<tr><th>Operator</th><th>Means</th></tr>
+<tr><td><code>==</code></td><td>equal to (two equals! one is assignment)</td></tr>
+<tr><td><code>!=</code></td><td>not equal to</td></tr>
+<tr><td><code>&lt;</code> <code>&gt;</code></td><td>less / greater than</td></tr>
+<tr><td><code>&lt;=</code> <code>&gt;=</code></td><td>less than or equal / greater than or equal</td></tr>
+</table>
+
+<h3>Combining conditions</h3>
+
+<pre><code>
+if lam &gt; 380 and lam &lt; 740:
+    print(&quot;visible&quot;)
+
+if metal == &quot;zinc&quot; or metal == &quot;copper&quot;:
+    print(&quot;needs UV&quot;)
+
+if not emitted:
+    print(&quot;nothing happened&quot;)
+</code></pre>
+
+<p><code>and</code> needs both true; <code>or</code> needs at least one; <code>not</code> flips it.</p>
+
+<p>Python also allows the beautiful mathematical form:</p>
+
+<pre><code>
+if 380 &lt; lam &lt; 740:      # exactly like the maths notation
+</code></pre>
+
+<hr>
+
+<h2>3.3 The <code>for</code> loop</h2>
+
+<p>A <code>for</code> loop repeats once for each item in a collection.</p>
+
+<pre><code>
+for T in [3000, 4000, 5000, 5778]:
+    print(f&quot;T = {T} K, peak at {2.898e-3/T*1e9:.0f} nm&quot;)
+</code></pre>
+
+<p>Read it as: &quot;for each value in this list, call it T, and do the block.&quot;</p>
+
+<h3><code>range()</code> — counting loops</h3>
+
+<pre><code>
+for i in range(5):
+    print(i)          # 0 1 2 3 4
+</code></pre>
+
+<p><code>range(5)</code> gives 0,1,2,3,4 — **five numbers, starting at zero, stopping before</p>
+<p>five**. This zero-start trips up every beginner. Variants:</p>
+
+<pre><code>
+range(5)          # 0 1 2 3 4
+range(2, 6)       # 2 3 4 5        (start, stop)
+range(1, 10, 2)   # 1 3 5 7 9      (start, stop, step)
+</code></pre>
+
+<p>In the project:</p>
+
+<pre><code>
+for n2 in range(n1+1, n1+15):    # transitions from level n1+1 upwards
+for run in range(runs):          # repeat the whole experiment
+for i in range(50):              # 50 random walks
+</code></pre>
+
+<h3>When you need both position and value</h3>
+
+<pre><code>
+for i, T in enumerate([3000, 4000, 5000]):
+    print(i, T)      # 0 3000 / 1 4000 / 2 5000
+</code></pre>
+
+<p><code>enumerate</code> hands you the index alongside the item — used in the project to</p>
+<p>stack plots at different vertical offsets.</p>
+
+<h3>Looping over pairs</h3>
+
+<pre><code>
+metals = {&#x27;sodium&#x27;: 2.28, &#x27;zinc&#x27;: 4.31}
+for name, W in metals.items():
+    print(f&quot;{name} has work function {W} eV&quot;)
+</code></pre>
+
+<p>A <strong>dictionary</strong> (<code>{key: value}</code>) is covered next chapter; <code>.items()</code> gives you</p>
+<p>both parts at once. This exact pattern draws every metal line in Task 4.</p>
+
+<hr>
+
+<h2>3.4 The <code>while</code> loop</h2>
+
+<p>Repeats as long as a condition holds:</p>
+
+<pre><code>
+n = 1
+while 2**n &lt; 1000:
+    n = n + 1
+print(f&quot;2^{n} is the first power of two above 1000&quot;)
+</code></pre>
+
+<p>Use <code>for</code> when you know how many repeats; <code>while</code> when you don&#x27;t. <strong>Danger:</strong> if</p>
+<p>the condition never becomes false, the program hangs forever. Press <code>Ctrl+C</code> in</p>
+<p>the terminal to stop a runaway program.</p>
+
+<p>You&#x27;ll notice the project uses almost no <code>while</code> loops. Physics simulations</p>
+<p>usually run for a known number of steps.</p>
+
+<hr>
+
+<h2>3.5 Nested loops — the structure of an experiment</h2>
+
+<p>A loop inside a loop. This is the shape of the Einstein diffusion study:</p>
+
+<pre><code>
+for run in range(30):              # OUTER: repeat the experiment 30 times
+    reset_everything()
+    for t in range(2000):          # INNER: 2000 ticks of time
+        do_one_tick_of_physics()
+        record(run, t)
+</code></pre>
+
+<p>The inner loop runs <strong>completely</strong> for each single pass of the outer loop:</p>
+<p>30 × 2000 = 60,000 ticks total.</p>
+
+<p>Understanding which loop does what is understanding the experiment:</p>
+
+<ul>
+<li><strong>inner loop</strong> = time passing within one experiment</li>
+<li><strong>outer loop</strong> = repeating the whole experiment to average out randomness</li>
+</ul>
+
+<p>Get these the wrong way round and your data is meaningless. Note also the</p>
+<p><code>reset_everything()</code> at the top of the outer loop — the clean test tube. Forget</p>
+<p>it and run 2 secretly continues run 1.</p>
+
+<hr>
+
+<h2>3.6 break and continue</h2>
+
+<pre><code>
+for i in range(100):
+    if i*i &gt; 500:
+        break        # leave the loop entirely
+    if i % 2 == 0:
+        continue     # skip to the next iteration
+    print(i)
+</code></pre>
+
+<p>Useful, but in numerical work you rarely need them. Prefer clear conditions.</p>
+
+<hr>
+
+<h2>3.7 Loops you should NOT write</h2>
+
+<p>Here is the most important sentence in Part 1:</p>
+
+<p>&gt; In scientific Python, a loop over thousands of numbers is usually a mistake.</p>
+
+<p>This works but is slow:</p>
+
+<pre><code>
+dx = []
+for angle in angles:
+    dx.append(0.5 * math.cos(angle))
+</code></pre>
+
+<p>This does the same thing about 100 times faster, in one line:</p>
+
+<pre><code>
+dx = 0.5 * np.cos(angles)
+</code></pre>
+
+<p>That&#x27;s <strong>vectorisation</strong>, and it&#x27;s the whole subject of Chapter 6. Loops are for</p>
+<p><em>experiments</em> (repeat this simulation 30 times); numpy is for <em>numbers</em> (do this</p>
+<p>maths to 200 particles at once). Knowing which to use is the difference between</p>
+<p>a program that runs in 3 seconds and one that runs in 5 minutes.</p>
+
+<hr>
+
+<h2>Exercises</h2>
+
+<p>Create <code>ch03_exercises.py</code>.</p>
+
+<ol>
+<li>Print the first 10 square numbers using a <code>for</code> loop.</li>
+<li>For each metal below, print whether visible light (take 500 nm) can eject an</li>
+<p>   electron. Work functions in eV: caesium 2.10, sodium 2.28, zinc 4.31,</p>
+<p>   copper 4.70. (Photon energy at 500 nm ≈ 2.48 eV.)</p>
+<li>Use a nested loop to print a 5×5 multiplication table, aligned neatly with</li>
+<p>   f-string width formatting.</p>
+<li>Hydrogen: loop over <code>n1</code> from 1 to 3, and inside, <code>n2</code> from <code>n1+1</code> to <code>n1+4</code>,</li>
+<p>   printing the photon energy <code>13.6 * (1/n1<strong>2 - 1/n2</strong>2)</code> eV for each</p>
+<p>   transition.</p>
+<li><strong>Break it:</strong> take exercise 4 and remove the indentation on the print line so</li>
+<p>   it sits at the outer level. What changes about the output, and why?</p>
+<li>Write a <code>while</code> loop that starts at n=1 and finds the smallest n where</li>
+<p>   <code>n**2 &gt; 10000</code>.</p>
+</ul>
+
+<hr>
+
+<h2>What you now know</h2>
+
+<ul>
+<li>Indentation defines blocks; the colon opens them.</li>
+<li><code>if / elif / else</code> with comparison and logical operators.</li>
+<li><code>for</code> with lists, <code>range</code>, <code>enumerate</code> and <code>.items()</code>.</li>
+<li><code>while</code> for unknown repeat counts (and <code>Ctrl+C</code> to escape).</li>
+<li>Nested loops = inner is time, outer is repetition; reset inside the outer loop.</li>
+<li>Loops are for experiments; numpy is for numbers.</li>
+</ul>
+
+<p>Next: <a href="04_lists_and_collections.md">Chapter 4 — Lists and collections</a></p>
+<div class="nav"><a href="02_variables_and_types.html">&larr; Variables, numbers and types</a><a href="04_lists_and_collections.html">Lists and collections &rarr;</a></div></main>
+</div></body></html>

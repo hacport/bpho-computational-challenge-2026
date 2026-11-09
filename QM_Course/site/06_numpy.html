@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>numpy: arrays and vectorised thinking</title><style>
+:root{
+  --bg:#0d1117; --panel:#161b22; --border:#30363d; --fg:#e6edf3;
+  --muted:#8b949e; --accent:#58a6ff; --code:#1f2630; --green:#3fb950;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+#layout{display:flex;min-height:100vh}
+#sidebar{width:310px;flex:0 0 310px;background:var(--panel);
+  border-right:1px solid var(--border);padding:22px 18px;overflow-y:auto;
+  height:100vh;position:sticky;top:0}
+#sidebar h1{font-size:17px;margin:0 0 4px;color:var(--accent)}
+#sidebar .sub{font-size:12px;color:var(--muted);margin-bottom:18px}
+#sidebar .part{font-size:11px;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--muted);margin:18px 0 7px}
+#sidebar a{display:block;color:var(--fg);text-decoration:none;padding:5px 9px;
+  border-radius:6px;font-size:13.5px;margin-bottom:1px}
+#sidebar a:hover{background:var(--code)}
+#sidebar a.active{background:var(--accent);color:#0d1117;font-weight:600}
+main{flex:1;padding:44px 56px;max-width:900px}
+h1{font-size:31px;margin:0 0 22px;line-height:1.25}
+h2{font-size:22px;margin:36px 0 12px;padding-bottom:7px;
+  border-bottom:1px solid var(--border)}
+h3{font-size:17px;margin:26px 0 9px;color:var(--accent)}
+p{margin:12px 0}
+a{color:var(--accent)}
+code{background:var(--code);padding:2px 6px;border-radius:4px;
+  font:14px/1.5 "Cascadia Code",Consolas,monospace;color:#ffa657}
+pre{background:var(--code);border:1px solid var(--border);border-radius:9px;
+  padding:15px 17px;overflow-x:auto;margin:16px 0}
+pre code{background:none;padding:0;color:#e6edf3;font-size:13.5px}
+table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px}
+th,td{border:1px solid var(--border);padding:8px 11px;text-align:left}
+th{background:var(--panel);color:var(--accent)}
+tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+blockquote{border-left:3px solid var(--accent);margin:16px 0;padding:2px 18px;
+  color:var(--muted)}
+hr{border:none;border-top:1px solid var(--border);margin:30px 0}
+ul,ol{padding-left:26px}
+li{margin:5px 0}
+strong{color:#fff}
+.nav{display:flex;justify-content:space-between;margin-top:52px;
+  padding-top:22px;border-top:1px solid var(--border);gap:14px}
+.nav a{padding:9px 15px;background:var(--panel);border:1px solid var(--border);
+  border-radius:8px;text-decoration:none;font-size:14px}
+.nav a:hover{border-color:var(--accent)}
+.hero{background:linear-gradient(135deg,#161b22,#1f2937);
+  border:1px solid var(--border);border-radius:13px;padding:30px;margin:22px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:13px;margin:20px 0}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;
+  padding:15px 17px;text-decoration:none;color:var(--fg);display:block}
+.card:hover{border-color:var(--accent)}
+.card b{display:block;margin-bottom:4px}
+.card span{font-size:12.5px;color:var(--muted)}
+@media(max-width:900px){#layout{flex-direction:column}
+  #sidebar{width:100%;height:auto;position:static}main{padding:26px 20px}}
+</style></head>
+<body><div id="layout">
+<nav id="sidebar"><h1>Computational Quantum Physics</h1><div class="sub">a course built from your own project</div>
+<a href="index.html" class="">&#8962; Home</a>
+<div class="part">Part 1 — Python from zero</div>
+<a href="01_setup_first_program.html" class="">01. Setup and your first program</a>
+<a href="02_variables_and_types.html" class="">02. Variables, numbers and types</a>
+<a href="03_decisions_and_loops.html" class="">03. Decisions and loops</a>
+<a href="04_lists_and_collections.html" class="">04. Lists and collections</a>
+<a href="05_functions.html" class="">05. Functions</a>
+<div class="part">Part 2 — Scientific Python</div>
+<a href="06_numpy.html" class="active">06. numpy: arrays and vectorised thinking</a>
+<a href="07_matplotlib.html" class="">07. matplotlib: drawing graphs properly</a>
+<a href="08_randomness.html" class="">08. Randomness, simulation and statistics</a>
+<div class="part">Part 3 — The ten tasks</div>
+<a href="09_task1_random_walk.html" class="">09. Task 1 — Random walks</a>
+<a href="10_task2_brownian.html" class="">10. Task 2 — Brownian motion</a>
+<a href="11_task3_blackbody.html" class="">11. Task 3 — Planck and Einstein</a>
+<a href="12_task4_photoelectric.html" class="">12. Task 4 — Photoelectric effect</a>
+<a href="13_task5_hydrogen.html" class="">13. Task 5 — Hydrogen spectrum</a>
+<a href="14_task6_diffraction.html" class="">14. Task 6 — Electron diffraction</a>
+<a href="15_task7_particle_in_box.html" class="">15. Task 7 — Particle in a box</a>
+<a href="16_task8_cryptography.html" class="">16. Task 8 — Quantum cryptography</a>
+<a href="17_task9_compton.html" class="">17. Task 9 — Compton scattering</a>
+<a href="18_task10_orbitals.html" class="">18. Task 10 — Hydrogenic orbitals</a>
+<div class="part">Part 4 — Making it interactive</div>
+<a href="19_widgets.html" class="">19. Widgets and interactivity</a>
+<a href="20_tkinter_launcher.html" class="">20. The tkinter launcher</a>
+<a href="21_colour_science.html" class="">21. Colour science: CIE 1931</a>
+<div class="part">Part 5 — Capstone</div>
+<a href="22_capstone.html" class="">22. Capstone: rebuild everything</a>
+<div class="part">Reference</div>
+<a href="python_cheatsheet.html" class="">Python cheat sheet</a>
+<a href="numpy_cheatsheet.html" class="">numpy cheat sheet</a>
+<a href="matplotlib_cheatsheet.html" class="">matplotlib cheat sheet</a>
+<a href="physics_formulas.html" class="">Physics formula sheet</a>
+<a href="errors_decoded.html" class="">Error messages decoded</a>
+<a href="glossary.html" class="">Glossary</a></nav>
+<main><h1>Chapter 6 — numpy: arrays and vectorised thinking</h1>
+
+<p><strong>Goal:</strong> the single most valuable chapter in this course. Learn to do maths on</p>
+<p>thousands of numbers at once, and understand every numpy call in your project.</p>
+
+<hr>
+
+<h2>6.1 The idea</h2>
+
+<p>A Python list holds <em>things</em>. A numpy <strong>array</strong> holds <em>numbers of the same type</em>,</p>
+<p>laid out in one solid block of memory, so the computer can do arithmetic on all</p>
+<p>of them at once.</p>
+
+<pre><code>
+import numpy as np          # &#x27;np&#x27; is universal convention
+
+lst = [1, 2, 3, 4]
+arr = np.array([1, 2, 3, 4])
+
+print(lst * 2)     # [1, 2, 3, 4, 1, 2, 3, 4]   list: repeats!
+print(arr * 2)     # [2 4 6 8]                  array: multiplies!
+</code></pre>
+
+<p>That difference is the whole point. With arrays, <code><em></code> means </em>multiply every</p>
+<p>element* — which is what a physicist means.</p>
+
+<pre><code>
+angles = np.array([0.0, 1.57, 3.14])
+dx = 0.5 * np.cos(angles)     # cosine of all three, scaled - one line
+</code></pre>
+
+<p>This is <strong>vectorisation</strong>: expressing &quot;do this to every number&quot; as a single</p>
+<p>operation. It is faster (numpy loops in C, not Python), shorter, and reads like</p>
+<p>the equation it implements.</p>
+
+<hr>
+
+<h2>6.2 Making arrays</h2>
+
+<pre><code>
+np.array([1, 2, 3])              # from a list
+np.zeros(5)                      # [0. 0. 0. 0. 0.]
+np.ones(3)                       # [1. 1. 1.]
+np.full(4, 7.0)                  # [7. 7. 7. 7.]
+np.zeros((30, 2000))             # a 30 x 2000 GRID of zeros
+np.arange(1, 8)                  # [1 2 3 4 5 6 7]   like range()
+np.linspace(0, 1, 5)             # [0.   0.25 0.5  0.75 1.  ]
+</code></pre>
+
+<p><strong><code>linspace</code> is the workhorse of physics plotting.</strong> <code>np.linspace(a, b, n)</code> gives</p>
+<p><code>n</code> evenly spaced points from <code>a</code> to <code>b</code> <strong>inclusive</strong>. Every graph in your</p>
+<p>project starts with one:</p>
+
+<pre><code>
+lam = np.linspace(1e-8, 3e-6, 2000)      # 2000 wavelengths for Planck&#x27;s law
+theta = np.linspace(0.001, np.pi, 500)   # 500 scattering angles for Compton
+r = np.linspace(0, 60, 20000)            # 20000 radii for orbital integration
+</code></pre>
+
+<p>More points = smoother curve and more accurate integration, at the cost of</p>
+<p>speed. 500–2000 is usually plenty for a graph; 20000 for careful integration.</p>
+
+<p><code>np.arange</code> vs <code>np.linspace</code>: arange takes a <em>step size</em> and excludes the end;</p>
+<p>linspace takes a <em>number of points</em> and includes it. For plotting, use linspace.</p>
+
+<hr>
+
+<h2>6.3 Shape</h2>
+
+<p>Every array has a shape — its dimensions.</p>
+
+<pre><code>
+a = np.zeros(5)
+print(a.shape)         # (5,)      one-dimensional, 5 items
+
+b = np.zeros((30, 2000))
+print(b.shape)         # (30, 2000)  two-dimensional: 30 rows, 2000 columns
+print(b.size)          # 60000       total number of elements
+</code></pre>
+
+<p>Two-dimensional arrays are grids. The diffusion experiment used one as a lab</p>
+<p>notebook: <strong>row = which run, column = which time step</strong>.</p>
+
+<pre><code>
+d2 = np.zeros((runs, frames))
+d2[run, t] = bx**2 + by**2       # write into row &#x27;run&#x27;, column &#x27;t&#x27;
+</code></pre>
+
+<p>Reading <code>d2[3, 100]</code>: &quot;run number 3, time step 100&quot;. Rows first, then columns —</p>
+<p>same as matrices in maths.</p>
+
+<hr>
+
+<h2>6.4 Element-wise maths and broadcasting</h2>
+
+<p>All the arithmetic operators work element-wise:</p>
+
+<pre><code>
+a = np.array([1.0, 2.0, 3.0])
+b = np.array([10.0, 20.0, 30.0])
+
+a + b        # [11. 22. 33.]
+a * b        # [10. 40. 90.]
+b / a        # [10. 10. 10.]
+a ** 2       # [1. 4. 9.]
+</code></pre>
+
+<p>Mixing an array with a single number is called <strong>broadcasting</strong> — the number is</p>
+<p>applied to every element:</p>
+
+<pre><code>
+a * 5           # [5. 10. 15.]
+a + 100         # [101. 102. 103.]
+1 / np.sqrt(V)  # works on the whole array at once
+</code></pre>
+
+<p>This is why the physics formulas look exactly like the textbook:</p>
+
+<pre><code>
+def planck(lam, T):
+    return (2*h*c**2 / lam**5) / np.expm1(h*c / (lam*kB*T))
+</code></pre>
+
+<p><code>lam</code> is 2000 wavelengths; every operation applies to all of them; the result is</p>
+<p>2000 radiances. One line, no loop, and it <em>reads like Planck&#x27;s law</em>.</p>
+
+<h3>Maths functions</h3>
+
+<pre><code>
+np.sin, np.cos, np.tan, np.arcsin, np.arctan2
+np.sqrt, np.exp, np.log, np.abs
+np.expm1(x)        # exp(x) - 1, accurately for small x
+np.degrees, np.radians
+np.pi              # 3.14159...
+</code></pre>
+
+<p>Use <code>np.</code> versions, not the <code>math</code> module, when working with arrays — <code>math.cos</code></p>
+<p>only handles one number at a time.</p>
+
+<p><strong><code>np.arctan2(y, x)</code></strong> deserves a note: it computes the angle of the point</p>
+<p>(x, y) <em>and gets the quadrant right</em>, unlike plain <code>arctan(y/x)</code>. Your orbital</p>
+<p>code uses it to find the azimuthal angle φ, and the Compton code to find the</p>
+<p>recoil angle.</p>
+
+<hr>
+
+<h2>6.5 Indexing, slicing and the last element</h2>
+
+<p>Same rules as lists:</p>
+
+<pre><code>
+x[0]        # first
+x[-1]       # last  -- the walker&#x27;s final position
+x[10:20]    # a slice
+x[::2]      # every second element
+x[f &gt; 1e15] # &lt;- see next section
+</code></pre>
+
+<p>For 2D arrays, use a comma:</p>
+
+<pre><code>
+d2[5, 100]      # single element: row 5, column 100
+d2[5, :]        # the whole of row 5      (all time steps of run 5)
+d2[:, 100]      # the whole of column 100 (all runs at time 100)
+</code></pre>
+
+<hr>
+
+<h2>6.6 Boolean masks — the most powerful idea here</h2>
+
+<p>Compare an array with a number and you get an array of True/False:</p>
+
+<pre><code>
+dist = np.array([2.0, 7.0, 4.0, 9.0])
+hit = dist &lt; 5
+print(hit)            # [ True False  True False]
+</code></pre>
+
+<p>That&#x27;s a <strong>mask</strong>. Use it as an index to select only the True positions:</p>
+
+<pre><code>
+print(dist[hit])      # [2. 4.]
+</code></pre>
+
+<p>And you can <em>assign</em> through it:</p>
+
+<pre><code>
+dist[hit] = 0
+print(dist)           # [0. 7. 0. 9.]
+</code></pre>
+
+<p>This is how collision detection works without a single <code>if</code>:</p>
+
+<pre><code>
+dist = np.sqrt((x - bx)**2 + (y - by)**2)   # 200 distances, one line
+hit = dist &lt; R                              # 200 True/False
+ux = (x[hit] - bx) / dist[hit]              # only the colliders
+x[hit] = bx + R*ux                          # move only them
+</code></pre>
+
+<p>And how the photoelectric graph refuses to draw below cutoff:</p>
+
+<pre><code>
+V[f &lt; f0] = np.nan       # NaN = &quot;not a number&quot;; matplotlib skips it
+</code></pre>
+
+<p>Companion functions:</p>
+
+<pre><code>
+np.any(hit)      # True if ANY element is True
+np.all(hit)      # True only if ALL are
+np.sum(hit)      # counts the Trues (True counts as 1)
+np.where(hit)    # gives the positions where True
+</code></pre>
+
+<p><code>if np.any(hit):</code> in your code means &quot;did anything collide this frame?&quot; — one</p>
+<p>cheap test before doing the collision maths.</p>
+
+<hr>
+
+<h2>6.7 Reductions: turning many numbers into one</h2>
+
+<pre><code>
+np.sum(a)          # total
+np.mean(a)         # average
+np.max(a), np.min(a)
+np.argmax(a)       # POSITION of the maximum, not its value
+np.std(a)          # standard deviation
+</code></pre>
+
+<p><code>argmax</code> is how you found the Bohr radius:</p>
+
+<pre><code>
+peak_1s = r[np.argmax(r**2 * radial(1, 0, r)**2)]
+</code></pre>
+
+<p>Read it inside-out: compute the radial probability at every radius → find the</p>
+<p><em>index</em> of the biggest → look up the radius at that index. Answer: 0.999 a₀.</p>
+<p>That&#x27;s a numerical measurement of a physical constant from your own model.</p>
+
+<h3>The <code>axis</code> argument</h3>
+
+<p>On a 2D array you can reduce along one direction:</p>
+
+<pre><code>
+msd = np.mean(d2, axis=0)     # average DOWN the columns -&gt; one value per time
+np.mean(d2, axis=1)           # average ACROSS the rows  -&gt; one value per run
+</code></pre>
+
+<p><code>axis=0</code> collapses rows (the 30 runs), leaving 2000 time points. That is</p>
+<p>precisely &quot;average the experiments together, keeping the time axis&quot; — the whole</p>
+<p>Einstein diffusion result in one call.</p>
+
+<p>Mnemonic: <strong>axis=0 collapses the rows, axis=1 collapses the columns.</strong></p>
+
+<hr>
+
+<h2>6.8 Cumulative operations</h2>
+
+<pre><code>
+steps = np.array([1, 2, 3, 4])
+np.cumsum(steps)        # [1 3 6 10]   running total
+</code></pre>
+
+<p>Each output is the sum of everything up to that point. Which is exactly how you</p>
+<p>turn <em>steps</em> into <em>positions</em>:</p>
+
+<pre><code>
+x = np.cumsum(dx)       # where I am after each step
+</code></pre>
+
+<p>Add the starting point at the front:</p>
+
+<pre><code>
+x = np.concatenate(([0], np.cumsum(dx)))
+</code></pre>
+
+<p><code>np.concatenate</code> glues arrays together — here, a one-element array <code>[0]</code> in</p>
+<p>front of the path so the walk begins at the origin.</p>
+
+<hr>
+
+<h2>6.9 Clipping and other tidy-ups</h2>
+
+<pre><code>
+np.clip(x, -L, L)       # anything below -L becomes -L, above L becomes L
+</code></pre>
+
+<p>Used for the box walls: escaping molecules are planted on the wall. Simple,</p>
+<p>fast, and physically defensible as a crude reflecting boundary.</p>
+
+<pre><code>
+np.round(a, 3)
+np.sort(a)
+np.unique(a)
+np.trapezoid(y, x)      # numerical integration - Chapter 15
+np.polyfit(x, y, 1)     # straight-line fit - Chapter 12
+np.meshgrid(gx, gy)     # 2D coordinate grids - Chapter 18
+</code></pre>
+
+<p>Each of these gets its own proper treatment in the chapter where the project</p>
+<p>first uses it.</p>
+
+<hr>
+
+<h2>6.10 Speed — see it for yourself</h2>
+
+<p>Type this and run it. It is worth the 30 seconds.</p>
+
+<pre><code>
+import numpy as np, time
+
+n = 2_000_000
+a = np.random.uniform(0, 1, n)
+
+t0 = time.time()
+total = 0.0
+for value in a:
+    total += value * 2
+t1 = time.time()
+
+t2 = time.time()
+total2 = np.sum(a * 2)
+t3 = time.time()
+
+print(f&quot;loop:  {t1-t0:.3f} s&quot;)
+print(f&quot;numpy: {t3-t2:.3f} s&quot;)
+print(f&quot;speedup: {(t1-t0)/(t3-t2):.0f}x&quot;)
+</code></pre>
+
+<p>Typically 50–200× faster. That factor is the difference between your Brownian</p>
+<p>animation running smoothly and stuttering; between the diffusion study taking 20</p>
+<p>seconds and 20 minutes.</p>
+
+<hr>
+
+<h2>Exercises</h2>
+
+<p>Create <code>ch06_exercises.py</code>.</p>
+
+<ol>
+<li>Make <code>np.linspace(0, 2*np.pi, 9)</code> and print its sine. Which entries should be</li>
+<p>   zero? Are they <em>exactly</em> zero? Explain (Chapter 2 §2.4).</p>
+<li>Create 1000 random angles, convert to dx, dy with step size 2, and use cumsum</li>
+<p>   to build a path. Print the final position and the distance from the origin.</p>
+<li>Make <code>d = np.array([3.0, 7.0, 1.0, 9.0, 5.0])</code>. Using a mask, print only the</li>
+<p>   values below 6, count how many there are, and set them all to zero.</p>
+<li>Build a 4×6 array of zeros. Fill row <code>i</code>, column <code>j</code> with <code>i*j</code> using nested</li>
+<p>   loops. Then print the mean of each row (<code>axis=1</code>) and each column (<code>axis=0</code>).</p>
+<li>Verify <code>np.argmax</code> behaviour: for <code>np.array([5, 2, 9, 4])</code>, print both</li>
+<p>   <code>np.max</code> and <code>np.argmax</code> and state the difference in one sentence.</p>
+<li><strong>Break it:</strong> compute <code>np.exp(x) - 1</code> and <code>np.expm1(x)</code> for</li>
+<p>   <code>x = 1e-12</code>. Print both with <code>.20e</code> formatting. Which is right, and why does</p>
+<p>   it matter for Planck&#x27;s law at long wavelengths?</p>
+<li>Run the speed test in §6.10 and write the speedup factor in a comment.</li>
+</ul>
+
+<hr>
+
+<h2>What you now know</h2>
+
+<ul>
+<li>Arrays do maths element-wise; broadcasting applies scalars to everything.</li>
+<li><code>linspace</code> builds the x-axis of every physics graph; shape describes dimensions.</li>
+<li>2D arrays are grids — <code>[row, column]</code>; <code>axis=0</code> averages down the runs.</li>
+<li>Boolean masks select and modify subsets: collisions, cutoffs, filters.</li>
+<li><code>cumsum</code> turns steps into positions; <code>concatenate</code> adds the origin.</li>
+<li><code>argmax</code> finds <em>where</em>, not <em>what</em> — how you measured the Bohr radius.</li>
+<li>Vectorised code is 50–200× faster than looping, and reads like physics.</li>
+</ul>
+
+<p>Next: <a href="07_matplotlib.md">Chapter 7 — matplotlib</a></p>
+<div class="nav"><a href="05_functions.html">&larr; Functions</a><a href="07_matplotlib.html">matplotlib: drawing graphs properly &rarr;</a></div></main>
+</div></body></html>

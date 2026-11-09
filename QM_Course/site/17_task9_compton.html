@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Task 9 — Compton scattering</title><style>
+:root{
+  --bg:#0d1117; --panel:#161b22; --border:#30363d; --fg:#e6edf3;
+  --muted:#8b949e; --accent:#58a6ff; --code:#1f2630; --green:#3fb950;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+#layout{display:flex;min-height:100vh}
+#sidebar{width:310px;flex:0 0 310px;background:var(--panel);
+  border-right:1px solid var(--border);padding:22px 18px;overflow-y:auto;
+  height:100vh;position:sticky;top:0}
+#sidebar h1{font-size:17px;margin:0 0 4px;color:var(--accent)}
+#sidebar .sub{font-size:12px;color:var(--muted);margin-bottom:18px}
+#sidebar .part{font-size:11px;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--muted);margin:18px 0 7px}
+#sidebar a{display:block;color:var(--fg);text-decoration:none;padding:5px 9px;
+  border-radius:6px;font-size:13.5px;margin-bottom:1px}
+#sidebar a:hover{background:var(--code)}
+#sidebar a.active{background:var(--accent);color:#0d1117;font-weight:600}
+main{flex:1;padding:44px 56px;max-width:900px}
+h1{font-size:31px;margin:0 0 22px;line-height:1.25}
+h2{font-size:22px;margin:36px 0 12px;padding-bottom:7px;
+  border-bottom:1px solid var(--border)}
+h3{font-size:17px;margin:26px 0 9px;color:var(--accent)}
+p{margin:12px 0}
+a{color:var(--accent)}
+code{background:var(--code);padding:2px 6px;border-radius:4px;
+  font:14px/1.5 "Cascadia Code",Consolas,monospace;color:#ffa657}
+pre{background:var(--code);border:1px solid var(--border);border-radius:9px;
+  padding:15px 17px;overflow-x:auto;margin:16px 0}
+pre code{background:none;padding:0;color:#e6edf3;font-size:13.5px}
+table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px}
+th,td{border:1px solid var(--border);padding:8px 11px;text-align:left}
+th{background:var(--panel);color:var(--accent)}
+tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+blockquote{border-left:3px solid var(--accent);margin:16px 0;padding:2px 18px;
+  color:var(--muted)}
+hr{border:none;border-top:1px solid var(--border);margin:30px 0}
+ul,ol{padding-left:26px}
+li{margin:5px 0}
+strong{color:#fff}
+.nav{display:flex;justify-content:space-between;margin-top:52px;
+  padding-top:22px;border-top:1px solid var(--border);gap:14px}
+.nav a{padding:9px 15px;background:var(--panel);border:1px solid var(--border);
+  border-radius:8px;text-decoration:none;font-size:14px}
+.nav a:hover{border-color:var(--accent)}
+.hero{background:linear-gradient(135deg,#161b22,#1f2937);
+  border:1px solid var(--border);border-radius:13px;padding:30px;margin:22px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:13px;margin:20px 0}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;
+  padding:15px 17px;text-decoration:none;color:var(--fg);display:block}
+.card:hover{border-color:var(--accent)}
+.card b{display:block;margin-bottom:4px}
+.card span{font-size:12.5px;color:var(--muted)}
+@media(max-width:900px){#layout{flex-direction:column}
+  #sidebar{width:100%;height:auto;position:static}main{padding:26px 20px}}
+</style></head>
+<body><div id="layout">
+<nav id="sidebar"><h1>Computational Quantum Physics</h1><div class="sub">a course built from your own project</div>
+<a href="index.html" class="">&#8962; Home</a>
+<div class="part">Part 1 — Python from zero</div>
+<a href="01_setup_first_program.html" class="">01. Setup and your first program</a>
+<a href="02_variables_and_types.html" class="">02. Variables, numbers and types</a>
+<a href="03_decisions_and_loops.html" class="">03. Decisions and loops</a>
+<a href="04_lists_and_collections.html" class="">04. Lists and collections</a>
+<a href="05_functions.html" class="">05. Functions</a>
+<div class="part">Part 2 — Scientific Python</div>
+<a href="06_numpy.html" class="">06. numpy: arrays and vectorised thinking</a>
+<a href="07_matplotlib.html" class="">07. matplotlib: drawing graphs properly</a>
+<a href="08_randomness.html" class="">08. Randomness, simulation and statistics</a>
+<div class="part">Part 3 — The ten tasks</div>
+<a href="09_task1_random_walk.html" class="">09. Task 1 — Random walks</a>
+<a href="10_task2_brownian.html" class="">10. Task 2 — Brownian motion</a>
+<a href="11_task3_blackbody.html" class="">11. Task 3 — Planck and Einstein</a>
+<a href="12_task4_photoelectric.html" class="">12. Task 4 — Photoelectric effect</a>
+<a href="13_task5_hydrogen.html" class="">13. Task 5 — Hydrogen spectrum</a>
+<a href="14_task6_diffraction.html" class="">14. Task 6 — Electron diffraction</a>
+<a href="15_task7_particle_in_box.html" class="">15. Task 7 — Particle in a box</a>
+<a href="16_task8_cryptography.html" class="">16. Task 8 — Quantum cryptography</a>
+<a href="17_task9_compton.html" class="active">17. Task 9 — Compton scattering</a>
+<a href="18_task10_orbitals.html" class="">18. Task 10 — Hydrogenic orbitals</a>
+<div class="part">Part 4 — Making it interactive</div>
+<a href="19_widgets.html" class="">19. Widgets and interactivity</a>
+<a href="20_tkinter_launcher.html" class="">20. The tkinter launcher</a>
+<a href="21_colour_science.html" class="">21. Colour science: CIE 1931</a>
+<div class="part">Part 5 — Capstone</div>
+<a href="22_capstone.html" class="">22. Capstone: rebuild everything</a>
+<div class="part">Reference</div>
+<a href="python_cheatsheet.html" class="">Python cheat sheet</a>
+<a href="numpy_cheatsheet.html" class="">numpy cheat sheet</a>
+<a href="matplotlib_cheatsheet.html" class="">matplotlib cheat sheet</a>
+<a href="physics_formulas.html" class="">Physics formula sheet</a>
+<a href="errors_decoded.html" class="">Error messages decoded</a>
+<a href="glossary.html" class="">Glossary</a></nav>
+<main><h1>Chapter 17 — Task 9: Compton scattering</h1>
+
+<p><strong>The task:</strong> *&quot;Plot fractional wavelength shift Δλ/λ, electron recoil speed v and</p>
+<p>electron recoil angle φ vs photon scattering angle θ.&quot;*</p>
+
+<p><strong>Beyond it:</strong> three photon energies spanning X-ray to gamma, fully relativistic</p>
+<p>recoil speeds, and a built-in energy-conservation test that closes to machine</p>
+<p>precision at every angle.</p>
+
+<hr>
+
+<h2>17.1 The physics</h2>
+
+<h3>Why Compton mattered</h3>
+
+<p>By 1923 the photon was still contentious. Planck had quantised emission and</p>
+<p>Einstein had explained the photoelectric effect, but many physicists regarded</p>
+<p>quantisation as a property of <em>matter&#x27;s interaction</em> with light rather than of</p>
+<p>light itself.</p>
+
+<p>Compton scattered X-rays off graphite and found the scattered radiation had a</p>
+<p><em>longer wavelength</em>, shifted by an amount depending only on the scattering</p>
+<p>angle. No wave theory can do that: a wave scattering off an electron re-radiates</p>
+<p>at the same frequency. But treat it as a **billiard-ball collision between a</p>
+<p>photon and an electron** — conserving relativistic energy and momentum — and the</p>
+<p>result falls out exactly. The photon was real.</p>
+
+<h3>The derivation</h3>
+
+<p>A photon of wavelength λ carries energy E = hc/λ and momentum p = h/λ. It hits a</p>
+<p>stationary electron (rest energy mₑc²), scatters through angle θ, and the</p>
+<p>electron recoils at angle φ.</p>
+
+<p><strong>Energy conservation:</strong></p>
+
+<p>  hc/λ + mₑc² = hc/λ′ + γmₑc²</p>
+
+<p><strong>Momentum conservation</strong> (two components):</p>
+
+<p>  h/λ = (h/λ′)cos θ + γmₑv cos φ</p>
+<p>  0 = (h/λ′)sin θ − γmₑv sin φ</p>
+
+<p>Three equations. Eliminate v and φ (square and add the momentum equations, then</p>
+<p>substitute the energy equation) and you get, remarkably simply:</p>
+
+<p>  <strong>λ′ − λ = (h/mₑc)(1 − cos θ)</strong></p>
+
+<p>The prefactor is the <strong>Compton wavelength</strong> of the electron:</p>
+
+<p>  λ_C = h/(mₑc) = 2.426 pm</p>
+
+<p>Notes worth making:</p>
+
+<ul>
+<li>The shift is <strong>absolute</strong>, not fractional: it depends only on θ, not on λ.</li>
+<p>  So the <em>fractional</em> shift Δλ/λ is large for short-wavelength (energetic)</p>
+<p>  photons and negligible for visible light — which is why we never notice</p>
+<p>  Compton scattering in daily life.</p>
+<li>Maximum shift at θ = 180° (backscatter): Δλ = 2λ_C = 4.85 pm.</li>
+<li>At θ = 0 (no deflection) nothing happens, as it must.</li>
+</ul>
+
+<h3>Electron recoil</h3>
+
+<p>Energy taken by the electron:</p>
+
+<p>  K = hc/λ − hc/λ′</p>
+
+<p>Relativistic speed from the Lorentz factor:</p>
+
+<p>  γ = 1 + K/(mₑc²),  <strong>v = c√(1 − 1/γ²)</strong></p>
+
+<p>Using the non-relativistic ½mv² here would be <em>wrong</em> at gamma energies — for a</p>
+<p>511 keV photon the backscattered electron reaches 0.8c, where relativistic</p>
+<p>corrections are enormous. Getting this right is a genuine discriminator between</p>
+<p>a careful entry and a sloppy one.</p>
+
+<p>The recoil angle comes from the momentum triangle:</p>
+
+<p>  tan φ = (sin θ/λ′) / (1/λ − cos θ/λ′)</p>
+
+<p>and φ → 90° as θ → 0 (a barely-deflected photon gives the electron a sideways</p>
+<p>nudge), φ → 0 as θ → 180° (backscattered photon drives the electron straight</p>
+<p>forward).</p>
+
+<hr>
+
+<h2>17.2 The code</h2>
+
+<h3>Constants and the Compton wavelength</h3>
+
+<pre><code>
+h = 6.62607015e-34
+c = 2.99792458e8
+e = 1.602176634e-19
+me = 9.10938356e-31
+
+lam_C = h / (me * c)
+print(f&#x27;Compton wavelength λ_C = h/(mₑc) = {lam_C*1e12:.3f} pm&#x27;)   # 2.426 pm
+</code></pre>
+
+<p>Computed, not typed. Same principle as E₀ in Chapter 13.</p>
+
+<h3>Three beams</h3>
+
+<pre><code>
+beams = {&quot;Compton&#x27;s X-rays (71.1 pm, 17.4 keV)&quot;: 71.1e-12,
+         &#x27;γ-ray, E = 511 keV&#x27;: h*c/(0.511e6*e),
+         &#x27;γ-ray, E = 1.24 MeV&#x27;: h*c/(1.24e6*e)}
+</code></pre>
+
+<p>Chosen deliberately:</p>
+
+<ul>
+<li><strong>71.1 pm</strong> is the actual molybdenum Kα line Compton used — historical fidelity.</li>
+<li><strong>511 keV</strong> is the electron rest energy, so λ = λ_C exactly and the maximum</li>
+<p>  fractional shift is <em>exactly</em> 2. A built-in check.</p>
+<li><strong>1.24 MeV</strong> pushes into the strongly relativistic regime (v = 0.94c).</li>
+</ul>
+
+<p>Writing <code>h<em>c/(0.511e6</em>e)</code> converts an energy in eV to a wavelength inline — no</p>
+<p>magic numbers.</p>
+
+<h3>The calculation</h3>
+
+<pre><code>
+theta = np.linspace(0.001, np.pi, 500)
+
+for name, lam0 in beams.items():
+    dlam = lam_C * (1 - np.cos(theta))
+    lam1 = lam0 + dlam
+    frac = dlam / lam0
+
+    E0 = h*c/lam0
+    E1 = h*c/lam1
+    KE = E0 - E1
+    gamma = 1 + KE/(me*c**2)
+    v = c*np.sqrt(1 - 1/gamma**2)
+
+    phi = np.arctan2(np.sin(theta)/lam1, 1/lam0 - np.cos(theta)/lam1)
+</code></pre>
+
+<p>Every line is one physics statement, evaluated for all 500 angles at once.</p>
+
+<p>Two technical points:</p>
+
+<p><strong>Why <code>theta</code> starts at 0.001 rather than 0.</strong> At exactly θ = 0 the recoil angle</p>
+<p>is a 0/0 limit and the electron speed is zero; starting a hair above avoids the</p>
+<p>ambiguity without visibly changing the plot. Sidestepping a removable singularity</p>
+<p>like this is normal practice — but you should know it&#x27;s there and say so.</p>
+
+<p><strong><code>np.arctan2(y, x)</code> rather than <code>arctan(y/x)</code></strong> — it takes the two components</p>
+<p>separately and therefore returns the angle in the correct quadrant (§6.4). With</p>
+<p>plain <code>arctan</code> the recoil angle would flip sign in part of the range.</p>
+
+<h3>The self-test</h3>
+
+<pre><code>
+check = E0 - (E1[-1] + KE[-1])
+print(f&#x27;  energy conservation residual at 180 deg: {check:.2e} J (should be ~0)&#x27;)
+</code></pre>
+
+<p>Output for all three beams: <code>0.00e+00</code>.</p>
+
+<p>This is a <strong>unit test built into a physics program</strong>. It verifies that the</p>
+<p>energies you computed actually satisfy the conservation law you started from —</p>
+<p>catching algebra slips, unit errors and typos automatically. Professional</p>
+<p>scientific code is full of these; student code almost never is, and judges</p>
+<p>notice.</p>
+
+<p>Printed results:</p>
+
+<pre><code>
+Compton&#x27;s X-rays: max fractional shift 0.0683, max recoil speed 0.0659 c
+γ-ray 511 keV:    max fractional shift 2.0000, max recoil speed 0.8000 c
+γ-ray 1.24 MeV:   max fractional shift 4.8532, max recoil speed 0.9433 c
+</code></pre>
+
+<p>The bold ones are exact-by-theory checks: 511 keV must give exactly 2.0000 and</p>
+<p>exactly 0.800c. Getting those digits right is evidence the whole relativistic</p>
+<p>chain is correct.</p>
+
+<hr>
+
+<h2>17.3 Reading the three panels</h2>
+
+<p><strong>Fractional shift</strong> rises monotonically with θ, saturating at 2λ_C/λ₀. The</p>
+<p>X-ray curve barely lifts off zero — 7% — while the 1.24 MeV curve reaches 4.85:</p>
+<p>the scattered photon has nearly six times its original wavelength and has lost</p>
+<p>most of its energy.</p>
+
+<p><strong>Recoil speed</strong> rises steeply then flattens as it approaches c — the relativistic</p>
+<p>speed limit made visible. A non-relativistic calculation would sail past c, which</p>
+<p>is exactly the sort of nonsense a check catches.</p>
+
+<p><strong>Recoil angle</strong> falls from 90° to 0° in all cases; the curvature differs because</p>
+<p>higher-energy photons transfer momentum more forwards.</p>
+
+<hr>
+
+<h2>Exercises</h2>
+
+<ol>
+<li>Verify Δλ at θ = 90° equals λ_C exactly (2.426 pm) for all three beams. Why</li>
+<p>   is it independent of λ₀?</p>
+<li>Compute the fractional shift for <strong>visible</strong> light (500 nm) at 180°. Express</li>
+<p>   it in parts per million. Why is Compton scattering irrelevant in optics?</p>
+<li>Add a fourth beam at 100 keV and find the angle at which the electron takes</li>
+<p>   half the photon&#x27;s energy.</p>
+<li>Plot the <em>scattered photon energy</em> against θ for all three beams and identify</li>
+<p>   the &quot;Compton edge&quot; — the maximum energy transferred to the electron. This</p>
+<p>   feature is directly visible in real gamma-ray spectra.</p>
+<li>Verify momentum conservation numerically as a second self-test: compute the</li>
+<p>   total x and y momentum before and after for every angle and print the largest</p>
+<p>   residual.</p>
+<li>Show that the non-relativistic formula v = √(2K/mₑ) exceeds c for the 1.24 MeV</li>
+<p>   beam beyond some angle. At which angle does it break down?</p>
+<li><strong>Stretch:</strong> implement the Klein–Nishina formula for the <em>probability</em> of</li>
+<p>   scattering at each angle and plot the angular distribution. This is what</p>
+<p>   determines how often each θ actually occurs.</p>
+</ul>
+
+<p>Solutions: <code>solutions/ch17_solutions.py</code></p>
+
+<hr>
+
+<h2>What you now know</h2>
+
+<ul>
+<li>Why Compton&#x27;s experiment established the photon as a particle.</li>
+<li>The full derivation of Δλ = λ_C(1 − cos θ) from relativistic conservation laws.</li>
+<li>Compton wavelength; absolute vs fractional shift; the 511 keV special case.</li>
+<li>Relativistic recoil via the Lorentz factor, and why the classical formula fails.</li>
+<li><code>arctan2</code> for correct quadrants; avoiding removable singularities deliberately.</li>
+<li>Building conservation-law self-tests into physics code.</li>
+</ul>
+
+<p>Next: <a href="18_task10_orbitals.md">Chapter 18 — Task 10: Hydrogen orbitals</a></p>
+<div class="nav"><a href="16_task8_cryptography.html">&larr; Task 8 — Quantum cryptography</a><a href="18_task10_orbitals.html">Task 10 — Hydrogenic orbitals &rarr;</a></div></main>
+</div></body></html>

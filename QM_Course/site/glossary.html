@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Glossary</title><style>
+:root{
+  --bg:#0d1117; --panel:#161b22; --border:#30363d; --fg:#e6edf3;
+  --muted:#8b949e; --accent:#58a6ff; --code:#1f2630; --green:#3fb950;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+#layout{display:flex;min-height:100vh}
+#sidebar{width:310px;flex:0 0 310px;background:var(--panel);
+  border-right:1px solid var(--border);padding:22px 18px;overflow-y:auto;
+  height:100vh;position:sticky;top:0}
+#sidebar h1{font-size:17px;margin:0 0 4px;color:var(--accent)}
+#sidebar .sub{font-size:12px;color:var(--muted);margin-bottom:18px}
+#sidebar .part{font-size:11px;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--muted);margin:18px 0 7px}
+#sidebar a{display:block;color:var(--fg);text-decoration:none;padding:5px 9px;
+  border-radius:6px;font-size:13.5px;margin-bottom:1px}
+#sidebar a:hover{background:var(--code)}
+#sidebar a.active{background:var(--accent);color:#0d1117;font-weight:600}
+main{flex:1;padding:44px 56px;max-width:900px}
+h1{font-size:31px;margin:0 0 22px;line-height:1.25}
+h2{font-size:22px;margin:36px 0 12px;padding-bottom:7px;
+  border-bottom:1px solid var(--border)}
+h3{font-size:17px;margin:26px 0 9px;color:var(--accent)}
+p{margin:12px 0}
+a{color:var(--accent)}
+code{background:var(--code);padding:2px 6px;border-radius:4px;
+  font:14px/1.5 "Cascadia Code",Consolas,monospace;color:#ffa657}
+pre{background:var(--code);border:1px solid var(--border);border-radius:9px;
+  padding:15px 17px;overflow-x:auto;margin:16px 0}
+pre code{background:none;padding:0;color:#e6edf3;font-size:13.5px}
+table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px}
+th,td{border:1px solid var(--border);padding:8px 11px;text-align:left}
+th{background:var(--panel);color:var(--accent)}
+tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+blockquote{border-left:3px solid var(--accent);margin:16px 0;padding:2px 18px;
+  color:var(--muted)}
+hr{border:none;border-top:1px solid var(--border);margin:30px 0}
+ul,ol{padding-left:26px}
+li{margin:5px 0}
+strong{color:#fff}
+.nav{display:flex;justify-content:space-between;margin-top:52px;
+  padding-top:22px;border-top:1px solid var(--border);gap:14px}
+.nav a{padding:9px 15px;background:var(--panel);border:1px solid var(--border);
+  border-radius:8px;text-decoration:none;font-size:14px}
+.nav a:hover{border-color:var(--accent)}
+.hero{background:linear-gradient(135deg,#161b22,#1f2937);
+  border:1px solid var(--border);border-radius:13px;padding:30px;margin:22px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:13px;margin:20px 0}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;
+  padding:15px 17px;text-decoration:none;color:var(--fg);display:block}
+.card:hover{border-color:var(--accent)}
+.card b{display:block;margin-bottom:4px}
+.card span{font-size:12.5px;color:var(--muted)}
+@media(max-width:900px){#layout{flex-direction:column}
+  #sidebar{width:100%;height:auto;position:static}main{padding:26px 20px}}
+</style></head>
+<body><div id="layout">
+<nav id="sidebar"><h1>Computational Quantum Physics</h1><div class="sub">a course built from your own project</div>
+<a href="index.html" class="">&#8962; Home</a>
+<div class="part">Part 1 — Python from zero</div>
+<a href="01_setup_first_program.html" class="">01. Setup and your first program</a>
+<a href="02_variables_and_types.html" class="">02. Variables, numbers and types</a>
+<a href="03_decisions_and_loops.html" class="">03. Decisions and loops</a>
+<a href="04_lists_and_collections.html" class="">04. Lists and collections</a>
+<a href="05_functions.html" class="">05. Functions</a>
+<div class="part">Part 2 — Scientific Python</div>
+<a href="06_numpy.html" class="">06. numpy: arrays and vectorised thinking</a>
+<a href="07_matplotlib.html" class="">07. matplotlib: drawing graphs properly</a>
+<a href="08_randomness.html" class="">08. Randomness, simulation and statistics</a>
+<div class="part">Part 3 — The ten tasks</div>
+<a href="09_task1_random_walk.html" class="">09. Task 1 — Random walks</a>
+<a href="10_task2_brownian.html" class="">10. Task 2 — Brownian motion</a>
+<a href="11_task3_blackbody.html" class="">11. Task 3 — Planck and Einstein</a>
+<a href="12_task4_photoelectric.html" class="">12. Task 4 — Photoelectric effect</a>
+<a href="13_task5_hydrogen.html" class="">13. Task 5 — Hydrogen spectrum</a>
+<a href="14_task6_diffraction.html" class="">14. Task 6 — Electron diffraction</a>
+<a href="15_task7_particle_in_box.html" class="">15. Task 7 — Particle in a box</a>
+<a href="16_task8_cryptography.html" class="">16. Task 8 — Quantum cryptography</a>
+<a href="17_task9_compton.html" class="">17. Task 9 — Compton scattering</a>
+<a href="18_task10_orbitals.html" class="">18. Task 10 — Hydrogenic orbitals</a>
+<div class="part">Part 4 — Making it interactive</div>
+<a href="19_widgets.html" class="">19. Widgets and interactivity</a>
+<a href="20_tkinter_launcher.html" class="">20. The tkinter launcher</a>
+<a href="21_colour_science.html" class="">21. Colour science: CIE 1931</a>
+<div class="part">Part 5 — Capstone</div>
+<a href="22_capstone.html" class="">22. Capstone: rebuild everything</a>
+<div class="part">Reference</div>
+<a href="python_cheatsheet.html" class="">Python cheat sheet</a>
+<a href="numpy_cheatsheet.html" class="">numpy cheat sheet</a>
+<a href="matplotlib_cheatsheet.html" class="">matplotlib cheat sheet</a>
+<a href="physics_formulas.html" class="">Physics formula sheet</a>
+<a href="errors_decoded.html" class="">Error messages decoded</a>
+<a href="glossary.html" class="active">Glossary</a></nav>
+<main><h1>Glossary</h1>
+
+<h2>Programming</h2>
+
+<p><strong>argument</strong> — a value passed into a function call.</p>
+
+<p><strong>array</strong> — numpy&#x27;s block of same-type numbers; supports element-wise maths.</p>
+
+<p><strong>artist</strong> — any drawable matplotlib object (line, patch, text) you can keep a</p>
+<p>handle to and modify.</p>
+
+<p><strong>boolean mask</strong> — an array of True/False used to select or modify elements.</p>
+
+<p><strong>broadcasting</strong> — applying an operation between arrays of different shapes, e.g.</p>
+<p>array × single number.</p>
+
+<p><strong>callback</strong> — a function you register to be run when an event happens.</p>
+
+<p><strong>closure (late binding)</strong> — a lambda looks up variables when <em>called</em>, not when</p>
+<p>created; fixed with default arguments.</p>
+
+<p><strong>docstring</strong> — the string at the top of a function documenting it.</p>
+
+<p><strong>event loop</strong> — the waiting loop that dispatches user events (<code>plt.show()</code>,</p>
+<p><code>root.mainloop()</code>).</p>
+
+<p><strong>f-string</strong> — <code>f&quot;{value:.2f}&quot;</code>, a string with embedded expressions.</p>
+
+<p><strong>float</strong> — a decimal number, stored approximately.</p>
+
+<p><strong>global</strong> — keyword letting a function modify a variable defined outside it.</p>
+
+<p><strong>index</strong> — position in a sequence, counting from 0.</p>
+
+<p><strong>interpreter</strong> — the program that executes your Python.</p>
+
+<p><strong>iterable</strong> — anything you can loop over.</p>
+
+<p><strong>lambda</strong> — a small anonymous inline function.</p>
+
+<p><strong>library / module / package</strong> — reusable code you import.</p>
+
+<p><strong>list</strong> — an ordered, growable collection.</p>
+
+<p><strong>local variable</strong> — a name that exists only inside a function call.</p>
+
+<p><strong>mutable</strong> — changeable in place (lists, arrays are; tuples, strings aren&#x27;t).</p>
+
+<p><strong>return</strong> — hands a value back from a function and ends it immediately.</p>
+
+<p><strong>scope</strong> — the region of code where a name is visible.</p>
+
+<p><strong>shape</strong> — an array&#x27;s dimensions, e.g. <code>(30, 2000)</code>.</p>
+
+<p><strong>slice</strong> — a subsection, <code>a[2:5]</code>; the stop index is excluded.</p>
+
+<p><strong>string</strong> — text.</p>
+
+<p><strong>tuple</strong> — a fixed, unchangeable ordered group.</p>
+
+<p><strong>unpacking</strong> — <code>x, y = f()</code>, assigning several names at once.</p>
+
+<p><strong>vectorisation</strong> — expressing element-wise work as whole-array operations</p>
+<p>instead of loops.</p>
+
+<hr>
+
+<h2>Numerical methods</h2>
+
+<p><strong>convergence check</strong> — repeating a calculation at higher resolution to confirm</p>
+<p>the answer has stopped changing.</p>
+
+<p><strong>floating-point error</strong> — the ~10⁻¹⁶ relative error inherent in decimal storage.</p>
+
+<p><strong>catastrophic cancellation</strong> — loss of precision when subtracting nearly-equal</p>
+<p>numbers; why <code>expm1</code> exists.</p>
+
+<p><strong>least squares</strong> — fitting by minimising the sum of squared residuals</p>
+<p>(<code>np.polyfit</code>).</p>
+
+<p><strong>linearisation</strong> — transforming variables so theory predicts a straight line.</p>
+
+<p><strong>Monte Carlo</strong> — using random sampling to compute a result.</p>
+
+<p><strong>rejection sampling</strong> — keeping random candidates with probability proportional</p>
+<p>to a target distribution.</p>
+
+<p><strong>seed</strong> — the number fixing a pseudo-random sequence, making runs reproducible.</p>
+
+<p><strong>trapezium rule</strong> — numerical integration by joining points with straight lines;</p>
+<p>error O(Δx²).</p>
+
+<p><strong>recurrence relation</strong> — computing term n from earlier terms; how special</p>
+<p>polynomials are generated.</p>
+
+<hr>
+
+<h2>Physics</h2>
+
+<p><strong>antibonding orbital</strong> — LCAO combination with a node between nuclei; higher</p>
+<p>energy.</p>
+
+<p><strong>Bohr radius (a₀)</strong> — 5.29 × 10⁻¹¹ m; where the 1s radial probability peaks.</p>
+
+<p><strong>bonding orbital</strong> — LCAO combination with density piled between nuclei; the</p>
+<p>covalent bond.</p>
+
+<p><strong>Bragg&#x27;s law</strong> — 2d sin θ = nλ; condition for constructive scattering off</p>
+<p>crystal planes.</p>
+
+<p><strong>Brownian motion</strong> — random motion of a suspended particle from molecular</p>
+<p>bombardment.</p>
+
+<p><strong>Compton wavelength</strong> — h/mₑc = 2.426 pm; scale of the Compton shift.</p>
+
+<p><strong>correspondence principle</strong> — quantum results approach classical ones for large</p>
+<p>quantum numbers.</p>
+
+<p><strong>de Broglie wavelength</strong> — λ = h/p; every particle&#x27;s wave nature.</p>
+
+<p><strong>degeneracy</strong> — different states sharing the same energy.</p>
+
+<p><strong>diffusion coefficient (D)</strong> — constant in ⟨R²⟩ = 4Dt (2D).</p>
+
+<p><strong>Dulong–Petit limit</strong> — classical molar heat capacity 3R ≈ 24.9 J K⁻¹ mol⁻¹.</p>
+
+<p><strong>Einstein temperature (θ_E)</strong> — hf/k_B for a solid&#x27;s characteristic vibration.</p>
+
+<p><strong>entanglement</strong> — a joint state of two particles not decomposable into</p>
+<p>independent states; correlations depend only on the relative measurement angle.</p>
+
+<p><strong>expectation value</strong> — ⟨f⟩ = ∫ψ*fψ dV, the mean of many measurements.</p>
+
+<p><strong>Langevin equation</strong> — damping plus random forcing; the standard model of</p>
+<p>Brownian motion.</p>
+
+<p><strong>LCAO</strong> — Linear Combination of Atomic Orbitals; building molecular orbitals by</p>
+<p>adding atomic ones.</p>
+
+<p><strong>Malus&#x27;s law</strong> — transmitted intensity ∝ cos²α; as a photon probability.</p>
+
+<p><strong>metamerism</strong> — different spectra that look identical.</p>
+
+<p><strong>node</strong> — where the wavefunction is exactly zero.</p>
+
+<p><strong>normalisation</strong> — scaling ψ so total probability is 1.</p>
+
+<p><strong>photoelectric effect</strong> — electron emission by photons; KE = hf − W.</p>
+
+<p><strong>Planckian locus</strong> — the path of black-body colours through colour space.</p>
+
+<p><strong>quantum numbers</strong> — n (energy/size), l (shape), m (orientation).</p>
+
+<p><strong>Rayleigh distribution</strong> — the distribution of 2D random-walk displacements.</p>
+
+<p><strong>Rayleigh–Jeans law</strong> — classical black-body formula; diverges at short λ.</p>
+
+<p><strong>reduced mass</strong> — μ = m₁m₂/(m₁+m₂); corrects for finite nuclear mass.</p>
+
+<p><strong>rejection of local realism</strong> — experiments (Aspect et al.) confirming quantum</p>
+<p>correlations that no local hidden-variable theory can produce.</p>
+
+<p><strong>spherical harmonics (Y_l^m)</strong> — the angular part of hydrogenic wavefunctions.</p>
+
+<p><strong>stopping voltage</strong> — the reverse voltage that just prevents photoelectrons</p>
+<p>reaching the anode; V_s = (hf − W)/e.</p>
+
+<p><strong>tristimulus values (XYZ)</strong> — the three numbers that define a colour.</p>
+
+<p><strong>ultraviolet catastrophe</strong> — the classical prediction of infinite short-λ</p>
+<p>emission.</p>
+
+<p><strong>uncertainty principle</strong> — Δx·Δp ≥ ħ/2.</p>
+
+<p><strong>wavefunction (ψ)</strong> — the quantum state; |ψ|² is a probability density.</p>
+
+<p><strong>Wien&#x27;s displacement law</strong> — λ_max T = 2.898 × 10⁻³ m K.</p>
+
+<p><strong>work function (W)</strong> — minimum energy to remove an electron from a metal.</p>
+
+<p><strong>zero-point energy</strong> — the non-zero minimum energy of a confined quantum system.</p>
+<div class="nav"><span></span><span></span></div></main>
+</div></body></html>

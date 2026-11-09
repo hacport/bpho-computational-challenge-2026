@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Functions</title><style>
+:root{
+  --bg:#0d1117; --panel:#161b22; --border:#30363d; --fg:#e6edf3;
+  --muted:#8b949e; --accent:#58a6ff; --code:#1f2630; --green:#3fb950;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+#layout{display:flex;min-height:100vh}
+#sidebar{width:310px;flex:0 0 310px;background:var(--panel);
+  border-right:1px solid var(--border);padding:22px 18px;overflow-y:auto;
+  height:100vh;position:sticky;top:0}
+#sidebar h1{font-size:17px;margin:0 0 4px;color:var(--accent)}
+#sidebar .sub{font-size:12px;color:var(--muted);margin-bottom:18px}
+#sidebar .part{font-size:11px;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--muted);margin:18px 0 7px}
+#sidebar a{display:block;color:var(--fg);text-decoration:none;padding:5px 9px;
+  border-radius:6px;font-size:13.5px;margin-bottom:1px}
+#sidebar a:hover{background:var(--code)}
+#sidebar a.active{background:var(--accent);color:#0d1117;font-weight:600}
+main{flex:1;padding:44px 56px;max-width:900px}
+h1{font-size:31px;margin:0 0 22px;line-height:1.25}
+h2{font-size:22px;margin:36px 0 12px;padding-bottom:7px;
+  border-bottom:1px solid var(--border)}
+h3{font-size:17px;margin:26px 0 9px;color:var(--accent)}
+p{margin:12px 0}
+a{color:var(--accent)}
+code{background:var(--code);padding:2px 6px;border-radius:4px;
+  font:14px/1.5 "Cascadia Code",Consolas,monospace;color:#ffa657}
+pre{background:var(--code);border:1px solid var(--border);border-radius:9px;
+  padding:15px 17px;overflow-x:auto;margin:16px 0}
+pre code{background:none;padding:0;color:#e6edf3;font-size:13.5px}
+table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px}
+th,td{border:1px solid var(--border);padding:8px 11px;text-align:left}
+th{background:var(--panel);color:var(--accent)}
+tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+blockquote{border-left:3px solid var(--accent);margin:16px 0;padding:2px 18px;
+  color:var(--muted)}
+hr{border:none;border-top:1px solid var(--border);margin:30px 0}
+ul,ol{padding-left:26px}
+li{margin:5px 0}
+strong{color:#fff}
+.nav{display:flex;justify-content:space-between;margin-top:52px;
+  padding-top:22px;border-top:1px solid var(--border);gap:14px}
+.nav a{padding:9px 15px;background:var(--panel);border:1px solid var(--border);
+  border-radius:8px;text-decoration:none;font-size:14px}
+.nav a:hover{border-color:var(--accent)}
+.hero{background:linear-gradient(135deg,#161b22,#1f2937);
+  border:1px solid var(--border);border-radius:13px;padding:30px;margin:22px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:13px;margin:20px 0}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;
+  padding:15px 17px;text-decoration:none;color:var(--fg);display:block}
+.card:hover{border-color:var(--accent)}
+.card b{display:block;margin-bottom:4px}
+.card span{font-size:12.5px;color:var(--muted)}
+@media(max-width:900px){#layout{flex-direction:column}
+  #sidebar{width:100%;height:auto;position:static}main{padding:26px 20px}}
+</style></head>
+<body><div id="layout">
+<nav id="sidebar"><h1>Computational Quantum Physics</h1><div class="sub">a course built from your own project</div>
+<a href="index.html" class="">&#8962; Home</a>
+<div class="part">Part 1 — Python from zero</div>
+<a href="01_setup_first_program.html" class="">01. Setup and your first program</a>
+<a href="02_variables_and_types.html" class="">02. Variables, numbers and types</a>
+<a href="03_decisions_and_loops.html" class="">03. Decisions and loops</a>
+<a href="04_lists_and_collections.html" class="">04. Lists and collections</a>
+<a href="05_functions.html" class="active">05. Functions</a>
+<div class="part">Part 2 — Scientific Python</div>
+<a href="06_numpy.html" class="">06. numpy: arrays and vectorised thinking</a>
+<a href="07_matplotlib.html" class="">07. matplotlib: drawing graphs properly</a>
+<a href="08_randomness.html" class="">08. Randomness, simulation and statistics</a>
+<div class="part">Part 3 — The ten tasks</div>
+<a href="09_task1_random_walk.html" class="">09. Task 1 — Random walks</a>
+<a href="10_task2_brownian.html" class="">10. Task 2 — Brownian motion</a>
+<a href="11_task3_blackbody.html" class="">11. Task 3 — Planck and Einstein</a>
+<a href="12_task4_photoelectric.html" class="">12. Task 4 — Photoelectric effect</a>
+<a href="13_task5_hydrogen.html" class="">13. Task 5 — Hydrogen spectrum</a>
+<a href="14_task6_diffraction.html" class="">14. Task 6 — Electron diffraction</a>
+<a href="15_task7_particle_in_box.html" class="">15. Task 7 — Particle in a box</a>
+<a href="16_task8_cryptography.html" class="">16. Task 8 — Quantum cryptography</a>
+<a href="17_task9_compton.html" class="">17. Task 9 — Compton scattering</a>
+<a href="18_task10_orbitals.html" class="">18. Task 10 — Hydrogenic orbitals</a>
+<div class="part">Part 4 — Making it interactive</div>
+<a href="19_widgets.html" class="">19. Widgets and interactivity</a>
+<a href="20_tkinter_launcher.html" class="">20. The tkinter launcher</a>
+<a href="21_colour_science.html" class="">21. Colour science: CIE 1931</a>
+<div class="part">Part 5 — Capstone</div>
+<a href="22_capstone.html" class="">22. Capstone: rebuild everything</a>
+<div class="part">Reference</div>
+<a href="python_cheatsheet.html" class="">Python cheat sheet</a>
+<a href="numpy_cheatsheet.html" class="">numpy cheat sheet</a>
+<a href="matplotlib_cheatsheet.html" class="">matplotlib cheat sheet</a>
+<a href="physics_formulas.html" class="">Physics formula sheet</a>
+<a href="errors_decoded.html" class="">Error messages decoded</a>
+<a href="glossary.html" class="">Glossary</a></nav>
+<main><h1>Chapter 5 — Functions</h1>
+
+<p><strong>Goal:</strong> package code into reusable machines, understand <code>return</code> and scope, and</p>
+<p>finally settle what <code>global</code> was doing in your Brownian motion file.</p>
+
+<hr>
+
+<h2>5.1 A function is a named machine</h2>
+
+<pre><code>
+def photon_energy(lam):
+    return 6.62607015e-34 * 2.99792458e8 / lam
+</code></pre>
+
+<p>Anatomy:</p>
+
+<ul>
+<li><code>def</code> — &quot;I am defining a machine&quot;</li>
+<li><code>photon_energy</code> — its name</li>
+<li><code>(lam)</code> — its <strong>parameter</strong>: the input it expects</li>
+<li><code>:</code> and indentation — the body</li>
+<li><code>return</code> — the value it hands back</li>
+</ul>
+
+<p><strong>Defining is not running.</strong> That block does nothing until you <em>call</em> it:</p>
+
+<pre><code>
+E = photon_energy(500e-9)
+print(E)
+</code></pre>
+
+<p>This is the single most important idea in the chapter, and it caused the</p>
+<p>&quot;flat zero&quot; bug in your diffusion file: you wrapped 2000 ticks of physics inside</p>
+<p><code>def update(...)</code> and never called it. Python dutifully filed the recipe away</p>
+<p>and did nothing. <strong>A recipe on the shelf never cooks.</strong></p>
+
+<hr>
+
+<h2>5.2 Arguments and returns</h2>
+
+<p>Multiple inputs, comma separated:</p>
+
+<pre><code>
+def kinetic_energy(m, v):
+    return 0.5 * m * v**2
+
+print(kinetic_energy(9.11e-31, 2.2e6))
+</code></pre>
+
+<p><strong>Returning several values</strong> — this is how <code>random_walk</code> handed back a whole</p>
+<p>path:</p>
+
+<pre><code>
+def random_walk(N, s):
+    ...
+    return x, y          # returns a tuple
+
+x, y = random_walk(1000, 1)   # unpacked into two names
+</code></pre>
+
+<p><strong>No return statement?</strong> The function returns <code>None</code> — Python&#x27;s word for</p>
+<p>nothing. A function that only draws a graph or prints text legitimately returns</p>
+<p>nothing.</p>
+
+<p><strong><code>return</code> ends the function immediately.</strong> Anything after it in the same block</p>
+<p>never runs. That&#x27;s why <code>return</code> must be the <em>last</em> line of your animation</p>
+<p><code>update()</code> function.</p>
+
+<h3>Default arguments</h3>
+
+<pre><code>
+def radial(n, l, r, Z=1):
+    ...
+</code></pre>
+
+<p><code>Z=1</code> means &quot;if the caller doesn&#x27;t say, use 1&quot;. So <code>radial(2, 1, r)</code> works</p>
+<p>(hydrogen), and <code>radial(2, 1, r, Z=2)</code> works too (helium ion). Defaults let one</p>
+<p>function serve many cases without extra code — this is exactly how your orbital</p>
+<p>code supports any hydrogenic atom for free.</p>
+
+<h3>Keyword arguments</h3>
+
+<pre><code>
+plt.plot(x, y, lw=0.8, color=&#x27;red&#x27;, label=&#x27;walk&#x27;)
+</code></pre>
+
+<p><code>lw=</code>, <code>color=</code>, <code>label=</code> are <strong>keyword arguments</strong>: named, order-independent,</p>
+<p>usually optional. Every matplotlib call you write uses them.</p>
+
+<hr>
+
+<h2>5.3 Scope: what a function can see</h2>
+
+<p>Variables created inside a function are <strong>local</strong> — they exist only during the</p>
+<p>call and vanish afterwards:</p>
+
+<pre><code>
+def f():
+    secret = 42
+    print(secret)     # fine
+
+f()
+print(secret)         # NameError: name &#x27;secret&#x27; is not defined
+</code></pre>
+
+<p>Functions <em>can read</em> variables from outside:</p>
+
+<pre><code>
+h = 6.626e-34
+
+def energy(f):
+    return h * f      # reads the global h - fine
+</code></pre>
+
+<p>But <strong>assigning</strong> to a name inside a function creates a <em>new local</em> variable,</p>
+<p>shadowing the outside one:</p>
+
+<pre><code>
+count = 0
+
+def increment():
+    count = count + 1      # UnboundLocalError!
+
+increment()
+</code></pre>
+
+<p>Python sees the assignment, decides <code>count</code> is local, then finds you&#x27;re reading</p>
+<p>it before it exists. Hence the error.</p>
+
+<hr>
+
+<h2>5.4 <code>global</code> — and why animations need it</h2>
+
+<p>To genuinely modify an outside variable from inside a function:</p>
+
+<pre><code>
+count = 0
+
+def increment():
+    global count
+    count = count + 1     # now it works
+</code></pre>
+
+<p>Which brings us to this line from Task 2:</p>
+
+<pre><code>
+def update(frame):
+    global x, y, bx, by, bvx, bvy
+</code></pre>
+
+<p><code>FuncAnimation</code> calls <code>update</code> once per frame. Each call must <em>change the world</em></p>
+<p>— molecule positions, particle velocity — and those changes must **survive to</p>
+<p>the next frame**. Without <code>global</code>, every frame would edit private copies that</p>
+<p>are thrown away, and nothing would ever move. That&#x27;s the whole story.</p>
+
+<p><strong>Style note:</strong> professionals avoid <code>global</code> in large programs (it makes it hard</p>
+<p>to know who changed what). For a small simulation script it&#x27;s the clearest tool</p>
+<p>available, and it is what nearly all matplotlib animation examples use. The</p>
+<p>grown-up alternative is a class — mentioned in §5.7.</p>
+
+<hr>
+
+<h2>5.5 Docstrings</h2>
+
+<p>A string on the first line of a function documents it:</p>
+
+<pre><code>
+def planck(lam, T):
+    &quot;&quot;&quot;Spectral radiance B(lambda, T) in W sr^-1 m^-3.&quot;&quot;&quot;
+    return (2*h*c**2 / lam**5) / np.expm1(h*c / (lam*kB*T))
+</code></pre>
+
+<p>Triple quotes allow multiple lines. <code>help(planck)</code> prints it. For physics code,</p>
+<p>say what the function returns <strong>and in what units</strong> — units are where real</p>
+<p>scientific bugs hide.</p>
+
+<hr>
+
+<h2>5.6 Why functions matter more than they look</h2>
+
+<p>Three reasons, all visible in your project:</p>
+
+<p><strong>1. Reuse.</strong> <code>random_walk</code> is called once for the single-walk figure, 4000 times</p>
+<p>for the RMS study, and 50 times for the overlay. One definition, three</p>
+<p>experiments.</p>
+
+<p><strong>2. Naming.</strong> <code>psi(n, l, m, x, y, z)</code> says what it is. The same maths inline</p>
+<p>would be an unreadable smear.</p>
+
+<p><strong>3. Testability.</strong> A function you can call in isolation is a function you can</p>
+<p><em>check</em>. That&#x27;s how the orbital verification works: call <code>radial()</code>, integrate</p>
+<p>it, compare with the analytic value. Code buried inside a loop can&#x27;t be tested</p>
+<p>like that.</p>
+
+<h3>The <code>__main__</code> guard</h3>
+
+<p>At the bottom of <code>task10_hydrogenic_orbitals.py</code>:</p>
+
+<pre><code>
+if __name__ == &#x27;__main__&#x27;:
+    ...all the plotting...
+</code></pre>
+
+<p>Meaning: &quot;only run this part if the file is being executed <em>directly</em>&quot;. When</p>
+<p>another file does <code>from task10_hydrogenic_orbitals import psi</code>, Python runs the</p>
+<p>file to learn the definitions — and this guard stops it also drawing nine</p>
+<p>orbital plots you didn&#x27;t ask for. Without it, the molecular-orbital file would</p>
+<p>open the whole gallery every time it imported one function.</p>
+
+<hr>
+
+<h2>5.7 A glimpse of classes (optional)</h2>
+
+<p>A <strong>class</strong> bundles data and functions together:</p>
+
+<pre><code>
+class Walker:
+    def __init__(self, s):
+        self.s = s
+        self.x = 0.0
+        self.y = 0.0
+
+    def step(self):
+        angle = np.random.uniform(0, 2*np.pi)
+        self.x += self.s*np.cos(angle)
+        self.y += self.s*np.sin(angle)
+
+w = Walker(0.5)
+w.step()
+print(w.x, w.y)
+</code></pre>
+
+<p><code>self</code> refers to the particular object. Classes are how you&#x27;d avoid <code>global</code></p>
+<p>entirely in a bigger program. You don&#x27;t need them for this project, but you</p>
+<p>should recognise them — and Chapter 22 offers a class-based rewrite as a</p>
+<p>stretch challenge.</p>
+
+<hr>
+
+<h2>Exercises</h2>
+
+<p>Create <code>ch05_exercises.py</code>.</p>
+
+<ol>
+<li>Write <code>de_broglie(V)</code> returning the electron wavelength for accelerating</li>
+<p>   voltage V, using λ = h/√(2mₑeV). Test with V=1000 (expect ≈ 3.9e-11 m).</p>
+<li>Write <code>bohr_energy(n)</code> returning −13.6/n² eV, then use it in a loop to print</li>
+<p>   the first five levels.</p>
+<li>Write <code>transition(n1, n2)</code> that returns <em>two</em> values: photon energy in eV and</li>
+<p>   wavelength in nm. Call it for (2,3) — expect ≈1.89 eV, ≈656 nm.</p>
+<li><strong>Break it:</strong> write a function that ends with <code>return result</code>, then add a</li>
+<p>   <code>print(&quot;done&quot;)</code> line <em>after</em> the return. Run it. Explain the output.</p>
+<li>Write a function with a default argument `def escape_velocity(M, R,</li>
+<p>   G=6.674e-11)` and call it both with and without G.</p>
+<li>Copy the <code>count</code> example from §5.3, watch it fail, then fix it with <code>global</code>.</li>
+<p>   Then fix it a <em>second</em> way — by returning the new value instead. Which is</p>
+<p>   cleaner?</p>
+</ul>
+
+<hr>
+
+<h2>What you now know</h2>
+
+<ul>
+<li><code>def</code> files a recipe; calling it runs it. Defining ≠ running.</li>
+<li>Parameters, multiple returns via tuples, defaults, keyword arguments.</li>
+<li>Local scope, reading globals, and why assignment creates locals.</li>
+<li><code>global</code> lets animation state survive between frames — that&#x27;s why Task 2 needs it.</li>
+<li>Docstrings state purpose <em>and units</em>.</li>
+<li>Functions give reuse, naming and testability; <code>__main__</code> guards make files importable.</li>
+</ul>
+
+<p><strong>End of Part 1.</strong> You can now read every non-numpy line in your project.</p>
+
+<p>Next: <a href="06_numpy.md">Chapter 6 — numpy</a></p>
+<div class="nav"><a href="04_lists_and_collections.html">&larr; Lists and collections</a><a href="06_numpy.html">numpy: arrays and vectorised thinking &rarr;</a></div></main>
+</div></body></html>

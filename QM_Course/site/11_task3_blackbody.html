@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Task 3 — Planck and Einstein</title><style>
+:root{
+  --bg:#0d1117; --panel:#161b22; --border:#30363d; --fg:#e6edf3;
+  --muted:#8b949e; --accent:#58a6ff; --code:#1f2630; --green:#3fb950;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+#layout{display:flex;min-height:100vh}
+#sidebar{width:310px;flex:0 0 310px;background:var(--panel);
+  border-right:1px solid var(--border);padding:22px 18px;overflow-y:auto;
+  height:100vh;position:sticky;top:0}
+#sidebar h1{font-size:17px;margin:0 0 4px;color:var(--accent)}
+#sidebar .sub{font-size:12px;color:var(--muted);margin-bottom:18px}
+#sidebar .part{font-size:11px;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--muted);margin:18px 0 7px}
+#sidebar a{display:block;color:var(--fg);text-decoration:none;padding:5px 9px;
+  border-radius:6px;font-size:13.5px;margin-bottom:1px}
+#sidebar a:hover{background:var(--code)}
+#sidebar a.active{background:var(--accent);color:#0d1117;font-weight:600}
+main{flex:1;padding:44px 56px;max-width:900px}
+h1{font-size:31px;margin:0 0 22px;line-height:1.25}
+h2{font-size:22px;margin:36px 0 12px;padding-bottom:7px;
+  border-bottom:1px solid var(--border)}
+h3{font-size:17px;margin:26px 0 9px;color:var(--accent)}
+p{margin:12px 0}
+a{color:var(--accent)}
+code{background:var(--code);padding:2px 6px;border-radius:4px;
+  font:14px/1.5 "Cascadia Code",Consolas,monospace;color:#ffa657}
+pre{background:var(--code);border:1px solid var(--border);border-radius:9px;
+  padding:15px 17px;overflow-x:auto;margin:16px 0}
+pre code{background:none;padding:0;color:#e6edf3;font-size:13.5px}
+table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px}
+th,td{border:1px solid var(--border);padding:8px 11px;text-align:left}
+th{background:var(--panel);color:var(--accent)}
+tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+blockquote{border-left:3px solid var(--accent);margin:16px 0;padding:2px 18px;
+  color:var(--muted)}
+hr{border:none;border-top:1px solid var(--border);margin:30px 0}
+ul,ol{padding-left:26px}
+li{margin:5px 0}
+strong{color:#fff}
+.nav{display:flex;justify-content:space-between;margin-top:52px;
+  padding-top:22px;border-top:1px solid var(--border);gap:14px}
+.nav a{padding:9px 15px;background:var(--panel);border:1px solid var(--border);
+  border-radius:8px;text-decoration:none;font-size:14px}
+.nav a:hover{border-color:var(--accent)}
+.hero{background:linear-gradient(135deg,#161b22,#1f2937);
+  border:1px solid var(--border);border-radius:13px;padding:30px;margin:22px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:13px;margin:20px 0}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;
+  padding:15px 17px;text-decoration:none;color:var(--fg);display:block}
+.card:hover{border-color:var(--accent)}
+.card b{display:block;margin-bottom:4px}
+.card span{font-size:12.5px;color:var(--muted)}
+@media(max-width:900px){#layout{flex-direction:column}
+  #sidebar{width:100%;height:auto;position:static}main{padding:26px 20px}}
+</style></head>
+<body><div id="layout">
+<nav id="sidebar"><h1>Computational Quantum Physics</h1><div class="sub">a course built from your own project</div>
+<a href="index.html" class="">&#8962; Home</a>
+<div class="part">Part 1 — Python from zero</div>
+<a href="01_setup_first_program.html" class="">01. Setup and your first program</a>
+<a href="02_variables_and_types.html" class="">02. Variables, numbers and types</a>
+<a href="03_decisions_and_loops.html" class="">03. Decisions and loops</a>
+<a href="04_lists_and_collections.html" class="">04. Lists and collections</a>
+<a href="05_functions.html" class="">05. Functions</a>
+<div class="part">Part 2 — Scientific Python</div>
+<a href="06_numpy.html" class="">06. numpy: arrays and vectorised thinking</a>
+<a href="07_matplotlib.html" class="">07. matplotlib: drawing graphs properly</a>
+<a href="08_randomness.html" class="">08. Randomness, simulation and statistics</a>
+<div class="part">Part 3 — The ten tasks</div>
+<a href="09_task1_random_walk.html" class="">09. Task 1 — Random walks</a>
+<a href="10_task2_brownian.html" class="">10. Task 2 — Brownian motion</a>
+<a href="11_task3_blackbody.html" class="active">11. Task 3 — Planck and Einstein</a>
+<a href="12_task4_photoelectric.html" class="">12. Task 4 — Photoelectric effect</a>
+<a href="13_task5_hydrogen.html" class="">13. Task 5 — Hydrogen spectrum</a>
+<a href="14_task6_diffraction.html" class="">14. Task 6 — Electron diffraction</a>
+<a href="15_task7_particle_in_box.html" class="">15. Task 7 — Particle in a box</a>
+<a href="16_task8_cryptography.html" class="">16. Task 8 — Quantum cryptography</a>
+<a href="17_task9_compton.html" class="">17. Task 9 — Compton scattering</a>
+<a href="18_task10_orbitals.html" class="">18. Task 10 — Hydrogenic orbitals</a>
+<div class="part">Part 4 — Making it interactive</div>
+<a href="19_widgets.html" class="">19. Widgets and interactivity</a>
+<a href="20_tkinter_launcher.html" class="">20. The tkinter launcher</a>
+<a href="21_colour_science.html" class="">21. Colour science: CIE 1931</a>
+<div class="part">Part 5 — Capstone</div>
+<a href="22_capstone.html" class="">22. Capstone: rebuild everything</a>
+<div class="part">Reference</div>
+<a href="python_cheatsheet.html" class="">Python cheat sheet</a>
+<a href="numpy_cheatsheet.html" class="">numpy cheat sheet</a>
+<a href="matplotlib_cheatsheet.html" class="">matplotlib cheat sheet</a>
+<a href="physics_formulas.html" class="">Physics formula sheet</a>
+<a href="errors_decoded.html" class="">Error messages decoded</a>
+<a href="glossary.html" class="">Glossary</a></nav>
+<main><h1>Chapter 11 — Task 3: Planck&#x27;s law and Einstein&#x27;s heat capacity</h1>
+
+<p><strong>The task:</strong> *&quot;Plot the Planck &#x27;Black Body radiation&#x27; spectrum B(λ,T) for several</p>
+<p>temperatures, and also plot Einstein&#x27;s model of molar heat capacity of solids vs</p>
+<p>temperature for various atomic crystals such as gold, copper, iron.&quot;*</p>
+
+<p><strong>Beyond it:</strong> the Wien&#x27;s-law locus threading every peak, the Rayleigh–Jeans</p>
+<p>curve showing the ultraviolet catastrophe, computed CIE glow colours, and the</p>
+<p>Dulong–Petit classical limit drawn as a reference line.</p>
+
+<p>This is where quantum mechanics actually begins.</p>
+
+<hr>
+
+<h2>11.1 The physics: how the quantum was forced into existence</h2>
+
+<h3>The problem in 1900</h3>
+
+<p>Heat something and it glows. Classical physics — treating light as waves in</p>
+<p>thermal equilibrium, each mode carrying kT of energy — predicts the</p>
+<p><strong>Rayleigh–Jeans law</strong>:</p>
+
+<p>  B(λ,T) = 2ckT / λ⁴</p>
+
+<p>It works beautifully at long wavelengths and is a catastrophe at short ones:</p>
+<p>as λ → 0, B → ∞. Integrated over all wavelengths, every warm object would emit</p>
+<p>infinite energy. Ehrenfest named it the <strong>ultraviolet catastrophe</strong>.</p>
+
+<h3>Planck&#x27;s fix</h3>
+
+<p>Planck (1900) assumed, initially as a mathematical trick he disliked, that an</p>
+<p>oscillator of frequency f can only have energy in <strong>discrete packets</strong> E = hf.</p>
+<p>The consequence: high-frequency (short-λ) modes need a big packet of energy to</p>
+<p>be excited at all, and at temperature T there simply isn&#x27;t enough thermal energy</p>
+<p>to pay for them. Short wavelengths are <em>frozen out</em>, and the divergence</p>
+<p>disappears:</p>
+
+<p>  <strong>B(λ,T) = (2hc²/λ⁵) · 1/(exp(hc/λk_BT) − 1)</strong></p>
+
+<p>That equation is the birth certificate of quantum mechanics.</p>
+
+<p><strong>Check the limit yourself</strong> (a genuinely instructive exercise): for large λ,</p>
+<p>hc/λkT is small, and exp(u) − 1 ≈ u, so</p>
+
+<p>  B → (2hc²/λ⁵)·(λk_BT/hc) = 2ck_BT/λ⁴</p>
+
+<p>which is Rayleigh–Jeans. Planck&#x27;s law <em>contains</em> the classical result as its</p>
+<p>long-wavelength limit — exactly as a good theory should.</p>
+
+<h3>Wien&#x27;s displacement law</h3>
+
+<p>Differentiating B with respect to λ and setting it to zero gives the peak:</p>
+
+<p>  <strong>λ_max T = b = 2.898 × 10⁻³ m·K</strong></p>
+
+<p>Hotter → bluer. The Sun at 5778 K peaks at 502 nm — in the middle of the visible</p>
+<p>band, which is not a coincidence: eyes evolved where the light is.</p>
+
+<h3>Einstein&#x27;s heat capacity</h3>
+
+<p>Same quantisation, applied to a solid&#x27;s vibrating atoms. Classically each atom</p>
+<p>has 3 degrees of freedom × kT, giving the <strong>Dulong–Petit</strong> result C = 3R ≈ 24.9</p>
+<p>J K⁻¹ mol⁻¹, independent of temperature. But experimentally C <em>falls</em> towards</p>
+<p>zero at low T — another classical failure.</p>
+
+<p>Einstein (1907) modelled a solid as N independent oscillators of one frequency</p>
+<p>with quantised energy, giving</p>
+
+<p>  <strong>C = 3R (θ_E/T)² e^(θ_E/T) / (e^(θ_E/T) − 1)²</strong></p>
+
+<p>where θ_E = hf/k_B is the <strong>Einstein temperature</strong>, characteristic of the</p>
+<p>material (stiff, light atoms → high θ_E). As T → ∞ this tends to 3R (classical</p>
+<p>limit recovered again); as T → 0 it dies exponentially, because there isn&#x27;t</p>
+<p>enough thermal energy to excite even one quantum of vibration.</p>
+
+<p>*(Aside for interest: real solids follow C ∝ T³ at very low T; Debye&#x27;s 1912</p>
+<p>model, which allows a spectrum of frequencies, fixes this. Einstein&#x27;s model is</p>
+<p>qualitatively right and much simpler.)*</p>
+
+<hr>
+
+<h2>11.2 The code</h2>
+
+<h3>Planck&#x27;s law as a function</h3>
+
+<pre><code>
+h  = 6.62607015e-34
+c  = 2.99792458e8
+kB = 1.380649e-23
+
+def planck(lam, T):
+    &quot;&quot;&quot;Spectral radiance B(lambda, T), W sr^-1 m^-3.&quot;&quot;&quot;
+    return (2*h*c**2 / lam**5) / np.expm1(h*c / (lam*kB*T))
+</code></pre>
+
+<p>Two details that matter:</p>
+
+<p><strong><code>np.expm1(x)</code> instead of <code>np.exp(x) - 1</code>.</strong> At long wavelengths the exponent is</p>
+<p>tiny, <code>exp(x)</code> is very close to 1, and subtracting two nearly-equal floats</p>
+<p>destroys precision (§2.4). <code>expm1</code> is built to compute e^x − 1 accurately for</p>
+<p>small x. Using it is a small mark of competence.</p>
+
+<p><strong>Bracketing the denominator.</strong> <code>h<em>c / (lam</em>kB*T)</code> — remove those brackets and</p>
+<p>you compute (hc/λ)·k_B·T, which is nonsense (§2.3).</p>
+
+<p>The function works on a single wavelength <em>or</em> a whole array, because every</p>
+<p>operation inside is vectorised. That&#x27;s not an accident — it&#x27;s why we write</p>
+<p>physics this way.</p>
+
+<h3>The family of curves</h3>
+
+<pre><code>
+lam = np.linspace(1e-8, 3e-6, 2000)      # 10 nm to 3 um
+
+plt.figure(figsize=(9, 5))
+for T in [3000, 4000, 5000, 5778, 6000]:
+    label = f&#x27;{T} K (Sun)&#x27; if T == 5778 else f&#x27;{T} K&#x27;
+    plt.plot(lam*1e9, planck(lam, T), label=label)
+</code></pre>
+
+<p><code>lam*1e9</code> converts metres to nanometres for the axis — **compute in SI, display</p>
+<p>in convenient units**. That rule prevents an enormous class of bugs.</p>
+
+<p>The <code>if ... else</code> inside an f-string is a <em>conditional expression</em>: it picks one</p>
+<p>of two values inline. Useful for labelling one special case.</p>
+
+<h3>The Wien locus — the elite touch</h3>
+
+<pre><code>
+Ts = np.linspace(2500, 6500, 200)
+lam_peak = 2.897771955e-3 / Ts
+plt.plot(lam_peak*1e9, planck(lam_peak, Ts), &#x27;k--&#x27;, lw=1,
+         label=&quot;Wien&#x27;s law $\\lambda_{max}=b/T$&quot;)
+</code></pre>
+
+<p>The clever bit: feed <em>200 temperatures</em> into Wien&#x27;s law to get their peak</p>
+<p>wavelengths, then evaluate Planck&#x27;s law <strong>at those peaks</strong>. The resulting dashed</p>
+<p>curve passes exactly through the crest of every solid line. It is a visual proof</p>
+<p>that your implementation satisfies the analytic peak condition — a check, not a</p>
+<p>decoration.</p>
+
+<h3>The catastrophe</h3>
+
+<pre><code>
+rayleigh_jeans = 2*c*kB*5778 / lam**4
+plt.plot(lam*1e9, rayleigh_jeans, &#x27;r:&#x27;, lw=1.5,
+         label=&#x27;Rayleigh–Jeans (classical, 5778 K)&#x27;)
+plt.ylim(0, 5e13)
+</code></pre>
+
+<p>Note the <code>ylim</code>: without it, the diverging classical curve squashes everything</p>
+<p>else to a flat line. Clipping the view is legitimate — the curve visibly runs</p>
+<p>off the top of the plot, which is precisely the point being made.</p>
+
+<h3>The computed glow colours</h3>
+
+<pre><code>
+from cie_color import spectrum_to_rgb
+lam_vis = np.linspace(380e-9, 740e-9, 300)
+for i, T in enumerate([3000, 4000, 5000, 5778, 6000]):
+    Bv = planck(lam_vis, T)
+    glow = spectrum_to_rgb(lam_vis*1e9, Bv/Bv.max())
+    plt.gca().add_patch(plt.Rectangle((2450, 4.3e13 - i*0.45e13), 400, 0.35e13,
+                                      color=glow))
+</code></pre>
+
+<p>Each swatch&#x27;s colour is <em>derived from the spectrum itself</em> by integrating</p>
+<p>against the CIE colour-matching functions (Chapter 21) — not chosen by eye. The</p>
+<p>1500 K swatch is ember orange, the Sun near-white, 9000 K blue-white. Physics</p>
+<p>determining pixels.</p>
+
+<h3>Einstein&#x27;s heat capacity</h3>
+
+<pre><code>
+Rgas = 8.314462618
+
+def einstein_C(T, TE):
+    &quot;&quot;&quot;Molar heat capacity, Einstein model. TE = Einstein temperature.&quot;&quot;&quot;
+    x = TE / T
+    return 3*Rgas * x**2 * np.exp(x) / np.expm1(x)**2
+
+T = np.linspace(1, 500, 1000)
+metals = {&#x27;lead (T$_E$=67 K)&#x27;: 67, &#x27;gold (T$_E$=121 K)&#x27;: 121,
+          &#x27;copper (T$_E$=245 K)&#x27;: 245, &#x27;iron (T$_E$=350 K)&#x27;: 350}
+
+for name, TE in metals.items():
+    plt.plot(T, einstein_C(T, TE), label=name)
+plt.axhline(3*Rgas, color=&#x27;k&#x27;, ls=&#x27;--&#x27;, lw=1,
+            label=&#x27;Dulong–Petit limit 3R $\\approx$ 24.9&#x27;)
+</code></pre>
+
+<ul>
+<li><code>x = TE/T</code> first makes the formula readable and avoids repeating the division.</li>
+<li><code>np.expm1(x)**2</code> again — the same accuracy argument, squared.</li>
+<li><code>T</code> starts at 1, not 0: dividing by zero would give infinity. (Try <code>T=0</code> and</li>
+<p>  read the warning; understanding <em>why</em> is the exercise.)</p>
+<li>The dictionary carries LaTeX in the keys so the legend renders <code>T_E</code> properly.</li>
+<li><code>axhline</code> at 3R shows the classical prediction the quantum curves approach</li>
+<p>  from below but never exceed — the whole point of the figure.</p>
+</ul>
+
+<hr>
+
+<h2>11.3 Reading your own figures</h2>
+
+<p><strong>Planck figure.</strong> Higher T → taller <em>and</em> left-shifted peaks. Area under each</p>
+<p>curve grows as T⁴ (Stefan–Boltzmann — a good exercise to verify numerically).</p>
+<p>The Sun&#x27;s curve peaks inside the shaded visible band. The dotted classical curve</p>
+<p>diverges at small λ.</p>
+
+<p><strong>Heat-capacity figure.</strong> All curves rise from zero and saturate at 3R. Lead</p>
+<p>(soft, heavy atoms, low θ_E) reaches the classical limit at low temperature;</p>
+<p>iron (stiff, light) needs far more heat. At room temperature, lead is</p>
+<p>essentially classical while iron is not — a quantum effect you can hold in your</p>
+<p>hand.</p>
+
+<hr>
+
+<h2>Exercises</h2>
+
+<ol>
+<li>Verify Stefan–Boltzmann numerically: integrate <code>planck(lam, T)</code> over</li>
+<p>   wavelength with <code>np.trapezoid</code> for several T, and check the total is</p>
+<p>   proportional to T⁴. (Fit <code>log(total)</code> against <code>log(T)</code> — the gradient should</p>
+<p>   be 4.)</p>
+<li>Verify Wien&#x27;s law numerically: for each T, find the peak with <code>np.argmax</code> and</li>
+<p>   check λ_max·T is constant. How close to 2.898e-3 do you get, and what limits</p>
+<p>   the accuracy?</p>
+<li>Show the Rayleigh–Jeans limit: plot the ratio of Planck to Rayleigh–Jeans</li>
+<p>   against λ for T = 5778 K. At what wavelength does the classical formula</p>
+<p>   become 10% wrong?</p>
+<li>Add tungsten (θ_E ≈ 240 K) and aluminium (θ_E ≈ 290 K) to the heat-capacity</li>
+<p>   plot. At 300 K, what fraction of the classical value has each metal reached?</p>
+<li>Derive Wien&#x27;s law yourself: differentiate B with respect to λ, set to zero,</li>
+<p>   and show you get the transcendental equation x = 5(1 − e^(−x)) with</p>
+<p>   x = hc/λk_BT. Solve it numerically (a <code>while</code> loop or <code>np.linspace</code> search)</p>
+<p>   and recover b = 2.898e-3.</p>
+<li><strong>Break it:</strong> replace <code>np.expm1(u)</code> with <code>np.exp(u) - 1</code> and plot the ratio of</li>
+<p>   the two versions at very long wavelengths (say 1 mm). Where do they diverge?</p>
+</ul>
+
+<p>Solutions: <code>solutions/ch11_solutions.py</code></p>
+
+<hr>
+
+<h2>What you now know</h2>
+
+<ul>
+<li>Why classical physics diverged, and how quantisation removed the divergence.</li>
+<li>Planck&#x27;s law, its Rayleigh–Jeans limit, and Wien&#x27;s displacement law.</li>
+<li>Einstein&#x27;s heat capacity model, the Einstein temperature, Dulong–Petit.</li>
+<li><code>expm1</code> for numerical accuracy; SI internally, convenient units for display.</li>
+<li>Evaluating a formula <em>along</em> a locus to prove a peak condition.</li>
+<li>Colours computed from spectra rather than chosen.</li>
+</ul>
+
+<p>Next: <a href="12_task4_photoelectric.md">Chapter 12 — Task 4: The photoelectric effect</a></p>
+<div class="nav"><a href="10_task2_brownian.html">&larr; Task 2 — Brownian motion</a><a href="12_task4_photoelectric.html">Task 4 — Photoelectric effect &rarr;</a></div></main>
+</div></body></html>

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Task 2 — Brownian motion</title><style>
+:root{
+  --bg:#0d1117; --panel:#161b22; --border:#30363d; --fg:#e6edf3;
+  --muted:#8b949e; --accent:#58a6ff; --code:#1f2630; --green:#3fb950;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:16px/1.7 -apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+#layout{display:flex;min-height:100vh}
+#sidebar{width:310px;flex:0 0 310px;background:var(--panel);
+  border-right:1px solid var(--border);padding:22px 18px;overflow-y:auto;
+  height:100vh;position:sticky;top:0}
+#sidebar h1{font-size:17px;margin:0 0 4px;color:var(--accent)}
+#sidebar .sub{font-size:12px;color:var(--muted);margin-bottom:18px}
+#sidebar .part{font-size:11px;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--muted);margin:18px 0 7px}
+#sidebar a{display:block;color:var(--fg);text-decoration:none;padding:5px 9px;
+  border-radius:6px;font-size:13.5px;margin-bottom:1px}
+#sidebar a:hover{background:var(--code)}
+#sidebar a.active{background:var(--accent);color:#0d1117;font-weight:600}
+main{flex:1;padding:44px 56px;max-width:900px}
+h1{font-size:31px;margin:0 0 22px;line-height:1.25}
+h2{font-size:22px;margin:36px 0 12px;padding-bottom:7px;
+  border-bottom:1px solid var(--border)}
+h3{font-size:17px;margin:26px 0 9px;color:var(--accent)}
+p{margin:12px 0}
+a{color:var(--accent)}
+code{background:var(--code);padding:2px 6px;border-radius:4px;
+  font:14px/1.5 "Cascadia Code",Consolas,monospace;color:#ffa657}
+pre{background:var(--code);border:1px solid var(--border);border-radius:9px;
+  padding:15px 17px;overflow-x:auto;margin:16px 0}
+pre code{background:none;padding:0;color:#e6edf3;font-size:13.5px}
+table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px}
+th,td{border:1px solid var(--border);padding:8px 11px;text-align:left}
+th{background:var(--panel);color:var(--accent)}
+tr:nth-child(even) td{background:rgba(255,255,255,.02)}
+blockquote{border-left:3px solid var(--accent);margin:16px 0;padding:2px 18px;
+  color:var(--muted)}
+hr{border:none;border-top:1px solid var(--border);margin:30px 0}
+ul,ol{padding-left:26px}
+li{margin:5px 0}
+strong{color:#fff}
+.nav{display:flex;justify-content:space-between;margin-top:52px;
+  padding-top:22px;border-top:1px solid var(--border);gap:14px}
+.nav a{padding:9px 15px;background:var(--panel);border:1px solid var(--border);
+  border-radius:8px;text-decoration:none;font-size:14px}
+.nav a:hover{border-color:var(--accent)}
+.hero{background:linear-gradient(135deg,#161b22,#1f2937);
+  border:1px solid var(--border);border-radius:13px;padding:30px;margin:22px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:13px;margin:20px 0}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;
+  padding:15px 17px;text-decoration:none;color:var(--fg);display:block}
+.card:hover{border-color:var(--accent)}
+.card b{display:block;margin-bottom:4px}
+.card span{font-size:12.5px;color:var(--muted)}
+@media(max-width:900px){#layout{flex-direction:column}
+  #sidebar{width:100%;height:auto;position:static}main{padding:26px 20px}}
+</style></head>
+<body><div id="layout">
+<nav id="sidebar"><h1>Computational Quantum Physics</h1><div class="sub">a course built from your own project</div>
+<a href="index.html" class="">&#8962; Home</a>
+<div class="part">Part 1 — Python from zero</div>
+<a href="01_setup_first_program.html" class="">01. Setup and your first program</a>
+<a href="02_variables_and_types.html" class="">02. Variables, numbers and types</a>
+<a href="03_decisions_and_loops.html" class="">03. Decisions and loops</a>
+<a href="04_lists_and_collections.html" class="">04. Lists and collections</a>
+<a href="05_functions.html" class="">05. Functions</a>
+<div class="part">Part 2 — Scientific Python</div>
+<a href="06_numpy.html" class="">06. numpy: arrays and vectorised thinking</a>
+<a href="07_matplotlib.html" class="">07. matplotlib: drawing graphs properly</a>
+<a href="08_randomness.html" class="">08. Randomness, simulation and statistics</a>
+<div class="part">Part 3 — The ten tasks</div>
+<a href="09_task1_random_walk.html" class="">09. Task 1 — Random walks</a>
+<a href="10_task2_brownian.html" class="active">10. Task 2 — Brownian motion</a>
+<a href="11_task3_blackbody.html" class="">11. Task 3 — Planck and Einstein</a>
+<a href="12_task4_photoelectric.html" class="">12. Task 4 — Photoelectric effect</a>
+<a href="13_task5_hydrogen.html" class="">13. Task 5 — Hydrogen spectrum</a>
+<a href="14_task6_diffraction.html" class="">14. Task 6 — Electron diffraction</a>
+<a href="15_task7_particle_in_box.html" class="">15. Task 7 — Particle in a box</a>
+<a href="16_task8_cryptography.html" class="">16. Task 8 — Quantum cryptography</a>
+<a href="17_task9_compton.html" class="">17. Task 9 — Compton scattering</a>
+<a href="18_task10_orbitals.html" class="">18. Task 10 — Hydrogenic orbitals</a>
+<div class="part">Part 4 — Making it interactive</div>
+<a href="19_widgets.html" class="">19. Widgets and interactivity</a>
+<a href="20_tkinter_launcher.html" class="">20. The tkinter launcher</a>
+<a href="21_colour_science.html" class="">21. Colour science: CIE 1931</a>
+<div class="part">Part 5 — Capstone</div>
+<a href="22_capstone.html" class="">22. Capstone: rebuild everything</a>
+<div class="part">Reference</div>
+<a href="python_cheatsheet.html" class="">Python cheat sheet</a>
+<a href="numpy_cheatsheet.html" class="">numpy cheat sheet</a>
+<a href="matplotlib_cheatsheet.html" class="">matplotlib cheat sheet</a>
+<a href="physics_formulas.html" class="">Physics formula sheet</a>
+<a href="errors_decoded.html" class="">Error messages decoded</a>
+<a href="glossary.html" class="">Glossary</a></nav>
+<main><h1>Chapter 10 — Task 2: Brownian motion and animation</h1>
+
+<p><strong>The task:</strong> *&quot;Consider N small particles of mass m and radius r moving randomly,</p>
+<p>some of which collide with a large particle of mass M and radius R. Use a random</p>
+<p>walk to model the smaller particles, and conservation of momentum to model</p>
+<p>collisions with the larger particle. Animate the subsequent motion.&quot;*</p>
+
+<p><strong>Beyond it:</strong> viscous damping (making it a Langevin model), a live</p>
+<p>squared-displacement panel, and a 30-run study showing MSD ∝ t — Einstein&#x27;s 1905</p>
+<p>result.</p>
+
+<p>This is the hardest chapter in Part 3. Take it slowly.</p>
+
+<hr>
+
+<h2>10.1 The physics</h2>
+
+<h3>The historical stakes</h3>
+
+<p>Einstein&#x27;s 1905 paper on Brownian motion was not about pollen. It was an</p>
+<p>argument that <strong>atoms exist</strong>, aimed at physicists who thought them a</p>
+<p>convenient fiction. His logic: if matter is made of molecules in thermal motion,</p>
+<p>a suspended particle must be bombarded unevenly and must therefore wander in a</p>
+<p>specific, calculable way. Perrin measured it in 1908, found agreement, and the</p>
+<p>atomic debate ended. He got the 1926 Nobel Prize.</p>
+
+<p>So Task 1 <em>assumed</em> a random walk. Task 2 <em>derives</em> one from mechanics.</p>
+
+<h3>The mechanics of one collision</h3>
+
+<p>A molecule (mass m) strikes a large particle (mass M) with m ≪ M. Momentum is</p>
+<p>conserved:</p>
+
+<p>  m u_before + M V_before = m u_after + M V_after</p>
+
+<p>The change in the large particle&#x27;s velocity from one hit is of order</p>
+
+<p>  ΔV ≈ (m/M) u</p>
+
+<p>So each individual kick is tiny (m/M ~ 10⁻¹² in reality), but there are ~10²⁰</p>
+<p>collisions per second, and crucially they <strong>don&#x27;t cancel exactly</strong>. The</p>
+<p>imbalance is a random walk in velocity — hence in position.</p>
+
+<p><strong>The direction of the kick.</strong> Model the particles as hard discs. The impulse</p>
+<p>acts along the <em>line of centres</em>. If the molecule sits at position <strong>p</strong> and the</p>
+<p>big particle at <strong>b</strong>, the unit vector from big to small is</p>
+
+<p>  <strong>û</strong> = (<strong>p</strong> − <strong>b</strong>) / |<strong>p</strong> − <strong>b</strong>|</p>
+
+<p>The molecule pushes inwards; by Newton&#x27;s third law the big particle recoils</p>
+<p>outwards along −<strong>û</strong>. That minus sign in the code is Newton&#x27;s third law.</p>
+
+<h3>Why drag is needed: the Langevin equation</h3>
+
+<p>Our first version had no friction, so kicks accumulated and the particle glided</p>
+<p>off like a puck on ice. Real pollen sits in water, where viscous drag removes</p>
+<p>momentum almost instantly (Stokes drag F = −6πηrv).</p>
+
+<p>Adding a drag term gives the <strong>Langevin equation</strong> (1908):</p>
+
+<p>  M dV/dt = −γV + F_random(t)</p>
+
+<p><em>deterministic damping + random forcing</em>. Our discrete version is exactly this:</p>
+
+<pre><code>
+bvx = drag * bvx          # the -γV term, as a per-frame multiplier
+bvx = bvx - (m/M)*s*np.sum(ux)   # the random force from collisions
+</code></pre>
+
+<p>A drag factor of 0.97 means &quot;keep 97% of your velocity each frame&quot;, equivalent</p>
+<p>to exponential decay with time constant τ = −Δt/ln(0.97) ≈ 33 frames. Choosing</p>
+<p>that number by comparing the trajectory shape to the expected jagged behaviour</p>
+<p>is legitimate model calibration — say so, and say what too-large and too-small</p>
+<p>look like (frozen; gliding).</p>
+
+<h3>The prediction to test: MSD ∝ t</h3>
+
+<p>Einstein&#x27;s headline result: for diffusion in 2D,</p>
+
+<p>  ⟨|R(t) − R(0)|²⟩ = 4Dt</p>
+
+<p>Mean squared displacement grows <strong>linearly with time</strong>. Note this is the same</p>
+<p>statement as Task 1&#x27;s ⟨R²⟩ = Ns², since N ∝ t. Straight line = diffusion.</p>
+
+<p>At very short times, before the particle has been kicked enough, motion is</p>
+<p>&quot;ballistic&quot; (MSD ∝ t²) — that&#x27;s the little curve at the start of your plot, and</p>
+<p>naming it <em>ballistic-to-diffusive crossover</em> is a genuine piece of insight.</p>
+
+<hr>
+
+<h2>10.2 Building it: stage by stage</h2>
+
+<h3>Stage 1 — a crowd of walkers</h3>
+
+<p>The mental shift from Chapter 9: there, an array was <strong>one particle over time</strong>.</p>
+<p>Here, an array is <strong>many particles at one instant</strong>.</p>
+
+<pre><code>
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+Np, s, L = 200, 0.5, 50
+x = np.random.uniform(-L, L, Np)
+y = np.random.uniform(-L, L, Np)
+
+fig, ax = plt.subplots()
+dots, = ax.plot(x, y, &#x27;b.&#x27;, ms=3)
+ax.set_xlim(-L, L); ax.set_ylim(-L, L)
+ax.set_aspect(&#x27;equal&#x27;)
+
+def update(frame):
+    global x, y
+    angles = np.random.uniform(0, 2*np.pi, Np)
+    x = x + s*np.cos(angles)
+    y = y + s*np.sin(angles)
+    dots.set_data(x, y)
+    return dots,
+
+anim = FuncAnimation(fig, update, frames=300, interval=30)
+plt.show()
+</code></pre>
+
+<p><strong>How animation works.</strong> <code>FuncAnimation</code> holds a clock. Every <code>interval</code></p>
+<p>milliseconds it calls your <code>update</code> function once, passing the frame number.</p>
+<p>Your job inside <code>update</code> is: advance the physics by one tick, then move the</p>
+<p>existing artists with <code>set_data</code>. It redraws only what changed — far faster than</p>
+<p>rebuilding the figure.</p>
+
+<p><strong>Three things that trip people up:</strong></p>
+
+<ol>
+<li><code>global x, y</code> — without it, each frame edits a private copy and nothing moves</li>
+<p>   (§5.4).</p>
+<li><code>anim = ...</code> — you must keep the animation object in a variable. If Python</li>
+<p>   garbage-collects it, the animation silently stops.</p>
+<li><code>return dots,</code> must be the last line, and the comma makes it a tuple.</li>
+</ul>
+
+<p>Fresh random angles every frame = no memory = a true random walk in time.</p>
+
+<h3>Stage 2 — the big particle</h3>
+
+<pre><code>
+m, M, R = 1.0, 25.0, 5.0
+bx, by = 0.0, 0.0        # position
+bvx, bvy = 0.0, 0.0      # velocity - starts at REST
+</code></pre>
+
+<p>Starting at rest is the experimental cleanliness: any motion it acquires must</p>
+<p>have come from collisions, because we programmed none.</p>
+
+<p>Draw it as a <strong>patch</strong>, not a marker (§7.6), so its drawn radius equals its</p>
+<p>physical radius:</p>
+
+<pre><code>
+from matplotlib.patches import Circle
+big = Circle((bx, by), R, fill=False, color=&#x27;r&#x27;, lw=2)
+ax.add_patch(big)
+</code></pre>
+
+<h3>Stage 3 — collision detection with a mask</h3>
+
+<pre><code>
+dist = np.sqrt((x - bx)**2 + (y - by)**2)     # 200 distances at once
+hit = dist &lt; R                                 # 200 True/False
+</code></pre>
+
+<p>Pythagoras, vectorised (§6.4), then a boolean mask (§6.6). No <code>if</code> statements,</p>
+<p>no loop over particles.</p>
+
+<h3>Stage 4 — the kick</h3>
+
+<pre><code>
+if np.any(hit):
+    ux = (x[hit] - bx) / dist[hit]      # unit vectors, big -&gt; molecule
+    uy = (y[hit] - by) / dist[hit]
+    bvx = bvx - (m/M) * s * np.sum(ux)  # Newton&#x27;s 3rd law: recoil is -u
+    bvy = bvy - (m/M) * s * np.sum(uy)
+    x[hit] = bx + R*ux                  # place hitters on the rim
+    y[hit] = by + R*uy
+</code></pre>
+
+<ul>
+<li>Dividing by <code>dist[hit]</code> normalises to unit vectors — pure direction.</li>
+<li><code>(m/M)*s</code> is the momentum-conserving velocity change per hit.</li>
+<li><code>np.sum</code> adds simultaneous kicks; opposite-side hits cancel, which is exactly</li>
+<p>  why the net motion is small and random rather than a steady shove.</p>
+<li>The last two lines prevent molecules from getting stuck inside the disc and</li>
+<p>  re-colliding every frame — a numerical necessity, not physics.</p>
+</ul>
+
+<h3>Stage 5 — drag, motion, walls</h3>
+
+<pre><code>
+bvx = drag * bvx
+bvy = drag * bvy
+bx = bx + bvx
+by = by + bvy
+bx = np.clip(bx, -L+R, L-R)
+by = np.clip(by, -L+R, L-R)
+</code></pre>
+
+<p>State updated by its own velocity — the <code>state = f(state)</code> heartbeat again. The</p>
+<p>clip keeps the disc inside the box, offset by R so its edge doesn&#x27;t cross the</p>
+<p>wall.</p>
+
+<p>Molecules get the same treatment right after their step:</p>
+
+<pre><code>
+x = np.clip(x, -L, L)
+y = np.clip(y, -L, L)
+</code></pre>
+
+<p>Keeping the gas density constant means the bombardment never dries up.</p>
+
+<h3>Stage 6 — the trail and the live MSD panel</h3>
+
+<pre><code>
+trail_x, trail_y = [], []          # lists, because they GROW (§4.5)
+trail, = ax.plot([], [], &#x27;r-&#x27;, lw=0.8)
+...
+trail_x.append(bx)
+trail_y.append(by)
+trail.set_data(trail_x, trail_y)
+</code></pre>
+
+<p>And the second panel:</p>
+
+<pre><code>
+fig, (ax, ax_msd) = plt.subplots(1, 2, figsize=(11, 5.2),
+                                 gridspec_kw={&#x27;width_ratios&#x27;: [1.15, 1]})
+msd_t, msd_v = [], []
+msd_line, = ax_msd.plot([], [], &#x27;b&#x27;)
+...
+msd_t.append(frame)
+msd_v.append(bx**2 + by**2)
+msd_line.set_data(msd_t, msd_v)
+ax_msd.relim(); ax_msd.autoscale_view()
+</code></pre>
+
+<p><code>relim()</code> recomputes the data limits and <code>autoscale_view()</code> rescales the axes —</p>
+<p>necessary because the curve is growing beyond the original limits.</p>
+
+<hr>
+
+<h2>10.3 The measurement run (no animation)</h2>
+
+<p>Drawing is ~100× slower than arithmetic, so the quantitative study lives in a</p>
+<p>separate file with no graphics at all inside the loops:</p>
+
+<pre><code>
+d2 = np.zeros((runs, frames))            # lab notebook: rows=runs, cols=time
+
+for run in range(runs):
+    x = np.random.uniform(-L, L, Np)     # RESET - the clean test tube
+    y = np.random.uniform(-L, L, Np)
+    bx, by = 0.0, 0.0
+    bvx, bvy = 0.0, 0.0
+    for t in range(frames):
+        ... identical physics, no plotting ...
+        d2[run, t] = bx**2 + by**2
+
+msd = np.mean(d2, axis=0)                # average over runs (§6.7)
+plt.plot(msd)
+</code></pre>
+
+<p>Note there is <strong>no function</strong> here and therefore <strong>no <code>global</code></strong> — the loop is</p>
+<p>the clock. Wrapping the physics in an uncalled <code>def</code> is the classic error, and</p>
+<p>it produces a perfectly flat line at zero (a recipe on the shelf never cooks).</p>
+
+<p>Interpretation of the result:</p>
+
+<ul>
+<li>Rising, roughly straight → diffusive, Einstein confirmed.</li>
+<li>Curved at the start → ballistic-to-diffusive crossover.</li>
+<li>Flattening at the end → the box walls limit how far it can roam (*confined</li>
+<p>  diffusion*). Honest to point out.</p>
+</ul>
+
+<hr>
+
+<h2>10.4 Assumptions in this model — state them</h2>
+
+<p>Good modelling means owning the simplifications:</p>
+
+<ol>
+<li>Molecules don&#x27;t collide with <strong>each other</strong>, only with the big particle.</li>
+<li>Collisions are treated as impulses along the line of centres; we don&#x27;t track</li>
+<p>   the molecule&#x27;s post-collision velocity properly.</p>
+<li>Molecule speed is fixed (<code>s</code> per frame) — a proxy for temperature, not a</li>
+<p>   Maxwell–Boltzmann distribution.</p>
+<li>Drag is a constant per-frame factor, not derived from Stokes&#x27; law.</li>
+<li>Walls are absorbing-then-replacing rather than elastic reflectors.</li>
+</ul>
+
+<p>Every one of these is defensible for the phenomenon being demonstrated, and</p>
+<p>naming them is what a physicist does. Each is also a ready-made extension.</p>
+
+<hr>
+
+<h2>Exercises</h2>
+
+<ol>
+<li>Set <code>drag = 1.0</code> (no damping) and watch. Describe what happens and explain it</li>
+<p>   in terms of accumulated momentum.</p>
+<li>Set <code>M = 200</code>. What happens to the trail, and why? Predict before running.</li>
+<li>Add a counter of total collisions and display it in the title using</li>
+<p>   <code>np.sum(hit)</code> accumulated over frames.</p>
+<li>Change <code>s</code> (molecule speed) and observe the effect on the MSD gradient. What</li>
+<p>   physical quantity is <code>s</code> standing in for?</p>
+<li>Fit a straight line to the linear part of your MSD curve with <code>np.polyfit</code></li>
+<p>   and extract the diffusion coefficient D from gradient = 4D.</p>
+<li><strong>Harder:</strong> implement proper elastic hard-disc collisions — reflect the</li>
+<p>   molecule&#x27;s velocity about the line of centres as well as kicking the disc.</p>
+<p>   Does the qualitative behaviour change?</p>
+<li><strong>Break it:</strong> move the reset lines outside the <code>for run</code> loop in the</li>
+<p>   measurement file. Plot the MSD and explain the shape you get.</p>
+</ul>
+
+<p>Solutions: <code>solutions/ch10_solutions.py</code></p>
+
+<hr>
+
+<h2>What you now know</h2>
+
+<ul>
+<li>Brownian motion as the historical proof of atoms; Einstein 1905, Perrin 1908.</li>
+<li>Momentum-conserving impulses along the line of centres, and why the sign is</li>
+<p>  Newton&#x27;s third law.</p>
+<li>Why damping is required, and that the result is a Langevin model.</li>
+<li><code>FuncAnimation</code>: the clock, <code>global</code>, keeping the object alive, <code>set_data</code>.</li>
+<li>Masks for collision detection with no loops.</li>
+<li>Separating the animated demo from the measurement run, and why.</li>
+<li>MSD ∝ t as the testable prediction, with ballistic and confined regimes visible.</li>
+</ul>
+
+<p>Next: <a href="11_task3_blackbody.md">Chapter 11 — Task 3: Planck and Einstein</a></p>
+<div class="nav"><a href="09_task1_random_walk.html">&larr; Task 1 — Random walks</a><a href="11_task3_blackbody.html">Task 3 — Planck and Einstein &rarr;</a></div></main>
+</div></body></html>
