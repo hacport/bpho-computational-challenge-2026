@@ -78,18 +78,8 @@ task10_extension_molecules.py     LCAO molecular orbitals
 cie_color.py                      CIE 1931 colour engine, shared by tasks 3/4/5
 quantum_lab.py                    the launcher
 study_copies/                     annotated versions of the code
-QM_Course/                        a 22-chapter course teaching all of the above
 video_script.md                   script for the 3-minute submission screencast
 ```
-
-### QM_Course
-
-A complete offline course written alongside the project: 22 chapters from
-`print("hello")` through numpy, every physics model derived and rebuilt line by
-line, to a capstone that has you reconstruct the whole entry from an empty
-folder. Includes six reference sheets and runnable solution files.
-
-Open `QM_Course/site/index.html` in any browser — no internet required.
 
 ---
 

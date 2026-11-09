@@ -20,6 +20,6 @@ desktop.ini
 .vscode/
 .idea/
 
-# --- Generated output ---
-# Uncomment if you prefer not to version the rendered site
-# QM_Course/site/
+# --- Personal learning material, kept local ---
+QM_Course/
+PUSH_TO_GITHUB.md
