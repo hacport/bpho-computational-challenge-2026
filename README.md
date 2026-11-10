@@ -1,4 +1,4 @@
-# Quantum Mechanics Lab — BPhO Computational Challenge 2026
+# Quantum Mechanics Lab BPhO Computational Challenge 2026
 
 Ten computational physics models covering the quantum revolution, written in
 Python, each built with a **quantitative check that could prove it wrong**.
